@@ -1,0 +1,3068 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Pronunciation Master - App Completa</title>
+    <!-- Tailwind CSS para diseño profesional y responsivo -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(12px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+    </style>
+	 <link rel="shortcut icon" href="images/favicon.ico">
+	 <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+	 <link rel="icon" sizes="192x192" href="images/android.png">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col antialiased">
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="bg-indigo-600 text-white p-2 rounded-xl shadow-md shadow-indigo-200">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold text-slate-900 tracking-tight" id="nav-title">Pronunzia</h1>
+                    <p class="text-xs text-slate-500 font-medium" id="nav-subtitle">English Pronunciation Guide</p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                <!-- Language Toggle Button -->
+                <button id="lang-toggle" class="inline-flex items-center gap-2 bg-slate-100 hover:bg-indigo-50 hover:text-indigo-600 text-slate-700 px-4 py-2 rounded-xl text-sm font-semibold transition-all border border-slate-200/60 shadow-sm">
+                    <span id="lang-label">Switch to English</span>
+                    <span class="text-base">🇺🇸</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO / SEARCH BLOCK -->
+    <section class="bg-gradient-to-br from-indigo-900 via-indigo-950 to-slate-900 text-white py-12 px-4 shadow-inner relative overflow-hidden">
+        <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(99,102,241,0.15),transparent_50%)]"></div>
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <span class="inline-flex items-center gap-1.5 bg-indigo-500/20 text-indigo-300 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 border border-indigo-500/30" id="hero-tag">
+                100% Completo & Gratuito
+            </span>
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight mb-3" id="hero-title">Domina las Reglas Fonéticas del Inglés</h2>
+            <p class="text-indigo-200/80 text-base md:text-lg max-w-2xl mx-auto mb-8 font-light" id="hero-desc">Teoría interactiva, ejemplos nativos reales y evaluación de tu pronunciación con Inteligencia Artificial integrada.</p>
+            
+            <!-- Dynamic Search Bar -->
+            <div class="max-w-xl mx-auto bg-white rounded-2xl p-1.5 shadow-xl flex items-center gap-2 border border-slate-200">
+                <div class="pl-3 text-slate-400">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </div>
+                <input type="text" id="search-input" placeholder="Buscar regla o palabra ejemplo (e.g., Schwa, Cat)..." class="w-full pl-1 pr-4 py-2 text-slate-900 placeholder-slate-400 focus:outline-none text-sm font-medium bg-transparent">
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN APP CORE CONTENT -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col md:flex-row gap-8">
+        
+        <!-- SIDEBAR CATEGORY FILTER -->
+        <aside class="w-full md:w-64 flex-shrink-0">
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm sticky top-24">
+                <h3 class="text-xs font-bold text-slate-400 uppercase tracking-wider px-2 mb-3" id="category-header">Categorías Fonéticas</h3>
+                <nav class="space-y-1" id="category-list">
+                    <!-- Categories injected dynamically via JS -->
+                </nav>
+            </div>
+        </aside>
+
+        <!-- CARDS CONTAINER SECTION -->
+        <section class="flex-grow">
+            <!-- Top Controls info -->
+            <div class="flex items-center justify-between mb-6">
+                <div class="text-sm text-slate-500 font-medium">
+                    <span id="results-count">Mostrando todas las reglas</span>
+                </div>
+                <div class="flex items-center gap-2 text-xs bg-slate-100 px-3 py-1.5 rounded-lg text-slate-600 font-medium">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span id="status-speech">Web Speech API Activa</span>
+                </div>
+            </div>
+
+            <!-- Rules Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6" id="rules-grid">
+                <!-- Injection via JS -->
+            </div>
+            
+            <!-- Empty state -->
+            <div id="empty-state" class="hidden text-center py-16 bg-white rounded-2xl border border-dashed border-slate-300 p-8">
+                <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                <h4 class="text-base font-bold text-slate-800" id="empty-title">No se encontraron reglas</h4>
+                <p class="text-sm text-slate-500 mt-1" id="empty-desc">Prueba refinando los términos de tu búsqueda.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- LIVE AUDIO RECOGNITION INTERACTIVE MODAL / TOAST -->
+    <div id="voice-modal" class="fixed bottom-6 right-6 z-50 max-w-sm w-full bg-white rounded-2xl shadow-2xl border border-slate-100 p-4 transform translate-y-32 opacity-0 pointer-events-none transition-all duration-300 shadow-indigo-100/50">
+        <div class="flex items-start gap-4">
+            <div id="voice-icon-container" class="bg-indigo-100 text-indigo-600 p-3 rounded-xl flex-shrink-0 animate-pulse">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+            </div>
+            <div class="flex-grow">
+                <div class="flex items-center justify-between">
+                    <h4 class="text-sm font-bold text-slate-900" id="modal-status-title">Escuchando...</h4>
+                    <button onclick="closeVoiceModal()" class="text-slate-400 hover:text-slate-600 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+                <p class="text-xs text-slate-500 mt-0.5" id="modal-status-desc">Por favor di la palabra claramente en inglés.</p>
+                
+                <div class="mt-3 bg-slate-50 rounded-xl p-2.5 border border-slate-100 flex flex-col gap-1">
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider" id="target-label">Palabra objetivo:</div>
+                    <div class="text-base font-bold text-indigo-600" id="voice-target-word">-</div>
+                    <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider mt-2" id="heard-label">Te escuchamos:</div>
+                    <div class="text-sm font-bold text-slate-800 italic" id="voice-heard-word">...</div>
+                </div>
+
+                <!-- Result Status Banner inside toast -->
+                <div id="voice-result-badge" class="mt-3 text-xs font-bold text-center py-1.5 rounded-lg hidden">
+                    -
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500 font-medium">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p id="footer-text">© 2026 Pronunzia App. Todos los derechos reservados. Aplicación didáctica bilingüe gratuita.</p>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-indigo-600 transition-colors">Creada por Leimbek-WebStudio</a>
+               <!-- <a href="#" class="hover:text-indigo-600 transition-colors">Website Integration</a>-->
+            </div>
+        </div>
+    </footer>
+	
+	
+	<!-- IMAGE LIGHTBOX MODAL -->
+	<div id="image-lightbox" onclick="closeImageLightbox()" class="fixed inset-0 z-[60] bg-black/80 backdrop-blur-sm flex items-center justify-center p-6 opacity-0 pointer-events-none transition-opacity duration-300">
+		<button onclick="closeImageLightbox()" class="absolute top-5 right-5 text-white bg-white/10 hover:bg-white/20 rounded-full p-2 transition-colors">
+			<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+		</button>
+		<img id="lightbox-img" src="" alt="" class="max-w-full max-h-full rounded-2xl shadow-2xl" onclick="event.stopPropagation()">
+	</div>
+
+    <!-- APP DATABASE & CORE ENGINE JAVASCRIPT -->
+    <script>
+        // 1. COMPREHENSIVE BILINGUAL DATABASE OF ALL ENGLISH PRONUNCIATION RULES
+        const appDatabase = {
+            ui: {
+                es: {
+                    navTitle: "Pronunzia Master",
+                    navSubtitle: "Manual Completo de Pronunciación Fonética",
+                    langLabel: "Switch to English",
+                    langEmoji: "🇺🇸",
+                    heroTag: "100% Completo & Gratuito",
+                    heroTitle: "Domina la Fonética del Inglés",
+                    heroDesc: "Aprende las reglas esenciales, entrena tu oído con ejemplos nativos y evalúa tu voz en tiempo real sin salir de tu navegador.",
+                    searchPlaceholder: "Buscar regla fonética o palabra de ejemplo...",
+                    categoryHeader: "Categorías Fonéticas",
+                    resultsCount: "Mostrando {count} reglas de pronunciación encontradas",
+                    emptyTitle: "No encontramos esa regla",
+                    emptyDesc: "Prueba buscando con palabras simples como 'vowel', 'th', 'silent' o el nombre de un carácter.",
+                    targetLabel: "Palabra objetivo:",
+                    heardLabel: "Te escuchamos:",
+                    statusListening: "Escuchando... Habla ahora",
+                    statusProcessing: "Procesando audio...",
+                    statusSuccess: "¡Excelente pronunciación! Perfect match.",
+                    statusMismatch: "Cerca, pero no coincide. ¡Inténtalo de nuevo!",
+                    statusError: "No se detectó audio o el micrófono está bloqueado.",
+                    btnListen: "Escuchar",
+                    btnPractice: "Practicar",
+                    allCategories: "Todas las Reglas"
+                },
+                en: {
+                    navTitle: "Pronunzia Master",
+                    navSubtitle: "Complete Phonetic Pronunciation Manual",
+                    langLabel: "Cambiar a Español",
+                    langEmoji: "🇲🇽",
+                    heroTag: "100% Complete & Free",
+                    heroTitle: "Master English Phonetics",
+                    heroDesc: "Learn essential phonology rules, train your hearing with native sounds, and analyze your voice accuracy instantly.",
+                    searchPlaceholder: "Search phonetic rules or vocabulary...",
+                    categoryHeader: "Phonetic Categories",
+                    resultsCount: "Showing {count} pronunciation rules found",
+                    emptyTitle: "No matching rules found",
+                    emptyDesc: "Try entering keywords such as 'vowel', 'th', 'silent' or structural terms.",
+                    targetLabel: "Target Word:",
+                    heardLabel: "We Heard:",
+                    statusListening: "Listening... Speak now",
+                    statusProcessing: "Processing audio...",
+                    statusSuccess: "Excellent pronunciation! Perfect match.",
+                    statusMismatch: "Close, but doesn't quite match. Try again!",
+                    statusError: "No audio detected or microphone permission denied.",
+                    btnListen: "Listen",
+                    btnPractice: "Practice",
+                    allCategories: "All Rules"
+                }
+            },
+            categories: [
+                { id: "all", es: "Todas las Reglas", en: "All Rules" },
+                { id: "short-vowels", es: "Vocales Cortas", en: "Short Vowels" },
+                { id: "long-vowels", es: "Vocales Largas", en: "Long Vowels" },
+                { id: "diphthongs", es: "Diptongos", en: "Diphthongs" },
+                { id: "consonants", es: "Consonantes Clave", en: "Key Consonants" },
+                { id: "silent-letters", es: "Letras Mudas", en: "Silent Letters" },
+                { id: "advanced-rules", es: "Fonética Avanzada", en: "Advanced Phonetics" }
+            ],
+            rules: [
+                // SHORT VOWELS
+                {
+                    id: "rule-short-a",
+                    categoryId: "short-vowels",
+                    symbol: "/æ/",
+                    title: { es: "Sonido de la 'A' corta", en: "Short 'A' Sound" },
+                    theory: {
+                        es: "Se produce abriendo mucho la boca de forma vertical, bajando la lengua hacia adelante. Es un sonido intermedio entre la 'A' y la 'E' de español.",
+                        en: "Produced by opening the mouth wide vertically, positioning the tongue low and forward. It sounds halfway between Spanish 'A' and 'E'."
+                    },
+                    image: "images/sound1.png",
+                    examples: [
+                        { word: "Cat", phonetic: "/kæt/", trans: { es: "Gato", en: "Cat" } },
+                        { word: "Apple", phonetic: "/ˈæpəl/", trans: { es: "Manzana", en: "Apple" } },
+                        { word: "Happy", phonetic: "/ˈhæpi/", trans: { es: "Feliz", en: "Happy" } }
+                    ]
+                },
+                {
+                    id: "rule-short-i",
+                    categoryId: "short-vowels",
+                    symbol: "/ɪ/",
+                    title: { es: "Sonido de la 'I' corta o relajada", en: "Short 'I' Sound" },
+                    theory: {
+                        es: "A diferencia de la 'I' española, este sonido es corto y muy relajado. La boca apenas se abre y las comisuras no se estiran.",
+                        en: "Unlike the sharp Spanish 'I', this sound is short and relaxed. Keep your lips relaxed and mouth slightly open."
+                    },
+                    image: "images/sound2.jpg",
+                    examples: [
+                        { word: "Sit", phonetic: "/sɪt/", trans: { es: "Sentarse", en: "Sit" } },
+                        { word: "Ship", phonetic: "/ʃɪp/", trans: { es: "Barco", en: "Ship" } },
+                        { word: "Pink", phonetic: "/pɪŋk/", trans: { es: "Rosa", en: "Pink" } }
+                    ]
+                },
+                {
+                    id: "rule-short-u",
+                    categoryId: "short-vowels",
+                    symbol: "/ʌ/",
+                    title: { es: "Sonido de la 'U' corta", en: "Short 'U' Sound" },
+                    theory: {
+                        es: "Se genera relajando completamente la boca y la lengua en el centro. Es similar a recibir un golpe leve en el abdomen ('uh').",
+                        en: "Created by relaxing your jaw and tongue completely in a neutral position. Sounds like a short guttural grunt."
+                    },
+                    image: "images/sound3.jpg",
+                    examples: [
+                        { word: "Cup", phonetic: "/kʌp/", trans: { es: "Taza", en: "Cup" } },
+                        { word: "Bus", phonetic: "/bʌs/", trans: { es: "Autobús", en: "Bus" } },
+                        { word: "Love", phonetic: "/lʌv/", trans: { es: "Amor", en: "Love" } }
+                    ]
+                },
+                // LONG VOWELS
+                {
+                    id: "rule-long-i",
+                    categoryId: "long-vowels",
+                    symbol: "/iː/",
+                    title: { es: "Sonido de la 'I' larga", en: "Long Vowel 'I' Sound" },
+                    theory: {
+                        es: "Este sonido se parece mucho a la 'I' del español, pero es más tenso y se prolonga un poco más de tiempo.",
+                        en: "Similar to the Spanish 'I' sound but requires tensing the lips and extending the duration slightly."
+                    },
+                    image: "images/sound4.png",
+                    examples: [
+                        { word: "See", phonetic: "/siː/", trans: { es: "Ver", en: "See" } },
+                        { word: "Sheep", phonetic: "/ʃiːp/", trans: { es: "Oveja", en: "Sheep" } },
+                        { word: "Eat", phonetic: "/iːt/", trans: { es: "Comer", en: "Eat" } }
+                    ]
+                },
+                {
+                    id: "rule-long-u",
+                    categoryId: "long-vowels",
+                    symbol: "/uː/",
+                    title: { es: "Sonido de la 'U' larga", en: "Long Vowel 'U' Sound" },
+                    theory: {
+                        es: "Sonido prolongado donde los labios se redondean firmemente hacia adelante de forma tensa.",
+                        en: "A prolonged sound where the lips are tightly rounded and pushed forward with tension."
+                    },
+                    image: "images/sound5.png",
+                    examples: [
+                        { word: "Blue", phonetic: "/bluː/", trans: { es: "Azul", en: "Blue" } },
+                        { word: "Shoe", phonetic: "/ʃuː/", trans: { es: "Zapato", en: "Shoe" } },
+                        { word: "Moon", phonetic: "/muːn/", trans: { es: "Luna", en: "Moon" } }
+                    ]
+                },
+                // DIPHTHONGS
+                {
+                    id: "rule-diph-ai",
+                    categoryId: "diphthongs",
+                    symbol: "/aɪ/",
+                    title: { es: "El Diptongo 'AI'", en: "The 'AI' Diphthong" },
+                    theory: {
+                        es: "Inicia con el sonido de una 'A' abierta y se desliza con fluidez hacia una 'I' corta y relajada. Parecido al español 'Ay'.",
+                        en: "Starts with an open vowel sound and smoothly glides into a short, relaxed 'I' sound. Like in 'my' or 'fly'."
+                    },
+                    image: "images/sound6.png",
+                    examples: [
+                        { word: "Sky", phonetic: "/skaɪ/", trans: { es: "Cielo", en: "Sky" } },
+                        { word: "Knife", phonetic: "/naɪf/", trans: { es: "Cuchillo", en: "Knife" } },
+                        { word: "Flight", phonetic: "/flaɪt/", trans: { es: "Vuelo", en: "Flight" } }
+                    ]
+                },
+                // KEY CONSONANTS
+                {
+                    id: "rule-th-unvoiced",
+                    categoryId: "consonants",
+                    symbol: "/θ/",
+                    title: { es: "Sonido TH Sordo (Unvoiced)", en: "Unvoiced 'TH' Sound" },
+                    theory: {
+                        es: "Se produce colocando la punta de la lengua justo entre los dientes frontales y expulsando aire suavemente sin vibrar las cuerdas vocales (como la Z de España).",
+                        en: "Produced by placing the tip of the tongue gently between the front teeth and blowing air out without vibrating your vocal cords."
+                    },
+                    image: "images/sound7.png",
+                    examples: [
+                        { word: "Think", phonetic: "/θɪŋk/", trans: { es: "Pensar", en: "Think" } },
+                        { word: "Three", phonetic: "/θriː/", trans: { es: "Tres", en: "Three" } },
+                        { word: "Mouth", phonetic: "/maʊθ/", trans: { es: "Boca", en: "Mouth" } }
+                    ]
+                },
+                {
+                    id: "rule-th-voiced",
+                    categoryId: "consonants",
+                    symbol: "/ð/",
+                    title: { es: "Sonido TH Sonoro (Voiced)", en: "Voiced 'TH' Sound" },
+                    theory: {
+                        es: "Es la misma posición de la lengua que el anterior (entre los dientes), pero esta vez DEBES hacer vibrar tus cuerdas vocales (como una D suave interdental).",
+                        en: "Same tongue position as unvoiced TH, but you MUST vibrate your vocal cords, generating a buzzing sensation."
+                    },
+                    image: "images/sound8.png",
+                    examples: [
+                        { word: "This", phonetic: "/ðɪs/", trans: { es: "Esto", en: "This" } },
+                        { word: "Father", phonetic: "/ˈfɑːðər/", trans: { es: "Padre", en: "Father" } },
+                        { word: "They", phonetic: "/ðeɪ/", trans: { es: "Ellos", en: "They" } }
+                    ]
+                },
+                // SILENT LETTERS
+                {
+                    id: "rule-silent-k",
+                    categoryId: "silent-letters",
+                    symbol: "Ø-K",
+                    title: { es: "La letra 'K' muda al inicio", en: "Silent 'K' Rule" },
+                    theory: {
+                        es: "Cuando una palabra en inglés comienza con el patrón de letras 'KN', la letra 'K' es completamente muda. Solo se pronuncia la 'N'.",
+                        en: "When a word starts with the cluster 'KN', the 'K' is completely silent. You only pronounce the 'N' sound."
+                    },
+                    image: "images/sound9.png",
+                    examples: [
+                        { word: "Know", phonetic: "/nəʊ/", trans: { es: "Saber/Conocer", en: "Know" } },
+                        { word: "Knee", phonetic: "/niː/", trans: { es: "Rodilla", en: "Knee" } },
+                        { word: "Knight", phonetic: "/naɪt/", trans: { es: "Caballero", en: "Knight" } }
+                    ]
+                },
+                {
+                    id: "rule-silent-b",
+                    categoryId: "silent-letters",
+                    symbol: "Ø-B",
+                    title: { es: "La letra 'B' muda al final", en: "Silent 'B' Rule" },
+                    theory: {
+                        es: "Si una palabra termina con la combinación 'MB', la letra 'B' no se pronuncia en absoluto. El sonido se detiene en la 'M'.",
+                        en: "If a word ends with the combination 'MB', the letter 'B' is fully silent. The vocalization stops at the 'M'."
+                    },
+                    image: "images/sound10.png",
+                    examples: [
+                        { word: "Climb", phonetic: "/klaɪm/", trans: { es: "Escalar", en: "Climb" } },
+                        { word: "Comb", phonetic: "/kəʊm/", trans: { es: "Peinar/Peine", en: "Comb" } },
+                        { word: "Thumb", phonetic: "/θʌm/", trans: { es: "Pulgar", en: "Thumb" } }
+                    ]
+                },
+                // ADVANCED FONETICS
+                {
+                    id: "rule-schwa",
+                    categoryId: "advanced-rules",
+                    symbol: "/ə/",
+                    title: { es: "El Sonido Schwa (El más importante)", en: "The Schwa Sound" },
+                    theory: {
+                        es: "Es el sonido más común en inglés. Ocurre solo en sílabas no acentuadas o débiles. La boca está totalmente neutral y relajada, emitiendo un sonido brevísimo.",
+                        en: "The most frequent sound in English. It only occurs in unstressed syllables. Your jaw and lips are totally neutral."
+                    },
+                    image: "images/sound11.png",
+                    examples: [
+                        { word: "About", phonetic: "/əˈbaʊt/", trans: { es: "Acerca de", en: "About" } },
+                        { word: "Computer", phonetic: "/kəmˈpjuːtər/", trans: { es: "Computadora", en: "Computer" } },
+                        { word: "Banana", phonetic: "/bəˈnænə/", trans: { es: "Plátano", en: "Banana" } }
+                    ]
+                },
+                {
+                    id: "rule-flap-t",
+                    categoryId: "advanced-rules",
+                    symbol: "/t̬/",
+                    title: { es: "La 'T' Intervocálica (Flap T)", en: "The Flap 'T' Sound" },
+                    theory: {
+                        es: "En inglés norteamericano, cuando la letra T se encuentra en medio de dos sonidos de vocal, muta y se pronuncia golpeando la lengua rápido, como la 'R' rápida del español 'Cariño'.",
+                        en: "In American English, when 'T' is between two vowel sounds, it changes into a fast tapped sound resembling Spanish soft 'R'."
+                    },
+                    image: "images/sound12.png",
+                    examples: [
+                        { word: "Water", phonetic: "/ˈwɔːt̬ər/", trans: { es: "Agua", en: "Water" } },
+                        { word: "Better", phonetic: "/ˈbɛt̬ər/", trans: { es: "Mejor", en: "Better" } },
+                        { word: "City", phonetic: "/ˈsɪt̬i/", trans: { es: "Ciudad", en: "City" } }
+                    ]
+                },
+				
+				// --- TERMINACIONES DEL PASADO (-ED) ---
+				{
+					id: "rule-ed-t",
+					categoryId: "advanced-rules",
+					symbol: "ED = /t/",
+					title: { 
+						es: "Terminación -ED pronunciada como /t/", 
+						en: "-ED ending pronounced as /t/" 
+					},
+					theory: {
+						es: "Si el verbo regular en presente termina en un sonido sordo (sin vibración de las cuerdas vocales, como p, k, f, s, ch, sh), la terminación '-ed' se pronuncia como una 'T' seca. La 'e' es completamente muda.",
+						en: "If the base verb ends in an unvoiced sound (no vocal cord vibration, like p, k, f, s, ch, sh), the '-ed' ending is pronounced as a sharp 'T'. The 'e' is completely silent."
+					},
+					image: "images/sound13.png",
+					examples: [
+						{ word: "Worked", phonetic: "/wɜːrkt/", trans: { es: "Trabajó", en: "Worked" } },
+						{ word: "Helped", phonetic: "/hɛlpt/", trans: { es: "Ayudó", en: "Helped" } },
+						{ word: "Washed", phonetic: "/wɒʃt/", trans: { es: "Lavó", en: "Washed" } }
+					]
+				},
+				{
+					id: "rule-ed-d",
+					categoryId: "advanced-rules",
+					symbol: "ED = /d/",
+					title: { 
+						es: "Terminación -ED pronunciada como /d/", 
+						en: "-ED ending pronounced as /d/" 
+					},
+					theory: {
+						es: "Si el verbo en presente termina en un sonido sonoro (con vibración vocal, como l, n, r, g, v, z, o cualquier vocal), el '-ed' se pronuncia como una 'D' suave. Aquí la 'e' también es muda.",
+						en: "If the base verb ends in a voiced sound (vocal cord vibration, like l, n, r, g, v, z, or any vowel), the '-ed' sounds like a soft 'D'. The 'e' here is also silent."
+					},
+					image: "images/sound14.jpg",
+					examples: [
+						{ word: "Played", phonetic: "/pleɪd/", trans: { es: "Jugó", en: "Played" } },
+						{ word: "Cleaned", phonetic: "/kliːnd/", trans: { es: "Limpió", en: "Cleaned" } },
+						{ word: "Loved", phonetic: "/lʌvd/", trans: { es: "Amó", en: "Loved" } }
+					]
+				},
+				{
+					id: "rule-ed-id",
+					categoryId: "advanced-rules",
+					symbol: "ED = /ɪd/",
+					title: { 
+						es: "Terminación -ED pronunciada como /ɪd/", 
+						en: "-ED ending pronounced as /ɪd/" 
+					},
+					theory: {
+						es: "Esta es la única regla donde la 'e' del '-ed' sí se pronuncia. Solo ocurre cuando el verbo original termina específicamente en el sonido 'T' o 'D'. Se pronuncia como una sílaba extra.",
+						en: "This is the only rule where the 'e' in '-ed' is vocalized. It occurs only when the base verb ends in a 'T' or 'D' sound. It adds an extra syllable."
+					},
+					image: "images/sound15.jpg",
+					examples: [
+						{ word: "Wanted", phonetic: "/ˈwɒntɪd/", trans: { es: "Quería", en: "Wanted" } },
+						{ word: "Needed", phonetic: "/ˈniːdɪd/", trans: { es: "Necesitaba", en: "Needed" } },
+						{ word: "Decided", phonetic: "/dɪˈsaɪdɪd/", trans: { es: "Decidió", en: "Decided" } }
+					]
+				},
+				// --- REGLAS DE LA S PLURAL Y TERCERA PERSONA ---
+				{
+					id: "rule-s-s",
+					categoryId: "advanced-rules",
+					symbol: "S = /s/",
+					title: { 
+						es: "Plurales y 3ra Persona: Sonido /s/", 
+						en: "Plurals & 3rd Person: /s/ Sound" 
+					},
+					theory: {
+						es: "Cuando una palabra termina en un sonido sordo (p, t, k, f, th sorda), la 's' final se pronuncia exactamente como una 'S' normal (como el siseo de una serpiente).",
+						en: "When a word ends in an unvoiced sound (p, t, k, f, unvoiced th), the final 's' is pronounced just like a regular 'S' (like a snake's hiss)."
+					},
+					image: "images/sound16.jpg",
+					examples: [
+						{ word: "Cats", phonetic: "/kæts/", trans: { es: "Gatos", en: "Cats" } },
+						{ word: "Books", phonetic: "/bʊks/", trans: { es: "Libros", en: "Books" } },
+						{ word: "Laughs", phonetic: "/læfs/", trans: { es: "Ríe", en: "Laughs" } }
+					]
+				},
+				{
+					id: "rule-s-z",
+					categoryId: "advanced-rules",
+					symbol: "S = /z/",
+					title: { 
+						es: "Plurales y 3ra Persona: Sonido /z/", 
+						en: "Plurals & 3rd Person: /z/ Sound" 
+					},
+					theory: {
+						es: "La gran mayoría de las palabras en inglés entran en esta regla. Si terminan en vocal o en consonante sonora (b, d, g, l, m, n, r, v), la 'S' final vibra y suena como un zumbido de abeja /z/.",
+						en: "The vast majority of English words fall into this rule. If they end in a vowel or voiced consonant, the final 'S' vibrates, sounding like a bee's buzz /z/."
+					},
+					image: "images/sound17.jpg",
+					examples: [
+						{ word: "Dogs", phonetic: "/dɒɡz/", trans: { es: "Perros", en: "Dogs" } },
+						{ word: "Cars", phonetic: "/kɑːrz/", trans: { es: "Autos", en: "Cars" } },
+						{ word: "Plays", phonetic: "/pleɪz/", trans: { es: "Juega", en: "Plays" } }
+					]
+				},
+				{
+					id: "rule-s-iz",
+					categoryId: "advanced-rules",
+					symbol: "S = /ɪz/",
+					title: { 
+						es: "Plurales y 3ra Persona: Sonido /ɪz/", 
+						en: "Plurals & 3rd Person: /ɪz/ Sound" 
+					},
+					theory: {
+						es: "Si la palabra termina en un sonido sibilante (que ya suena como s o ch: s, z, sh, ch, x, j), agregamos el sonido de una vocal corta antes de la z vibrante, creando una sílaba extra.",
+						en: "If the word ends in a sibilant sound (hissing/hushing: s, z, sh, ch, x, j), we insert a short vowel sound before the vibrating z, creating an extra syllable."
+					},
+					image: "images/sound18.jpg",
+					examples: [
+						{ word: "Buses", phonetic: "/ˈbʌsɪz/", trans: { es: "Autobuses", en: "Buses" } },
+						{ word: "Watches", phonetic: "/ˈwɒtʃɪz/", trans: { es: "Relojes / Mira", en: "Watches / Watches" } },
+						{ word: "Boxes", phonetic: "/ˈbɒksɪz/", trans: { es: "Cajas", en: "Boxes" } }
+					]
+				},
+				// --- MÁS LETRAS MUDAS CLAVE ---
+				{
+					id: "rule-silent-l",
+					categoryId: "silent-letters",
+					symbol: "Ø-L",
+					title: { 
+						es: "La letra 'L' muda", 
+						en: "Silent 'L' Rule" 
+					},
+					theory: {
+						es: "La 'L' es frecuentemente muda cuando va después de las vocales A, O y U, y antes de consonantes como F, K o M. En lugar de pronunciar la L, se alarga la vocal anterior.",
+						en: "The 'L' is frequently silent when following the vowels A, O, and U, and preceding consonants like F, K, or M. Instead of pronouncing the L, the preceding vowel is lengthened."
+					},
+					image: "images/sound19.png",
+					examples: [
+						{ word: "Walk", phonetic: "/wɔːk/", trans: { es: "Caminar", en: "Walk" } },
+						{ word: "Half", phonetic: "/hæf/", trans: { es: "Mitad", en: "Half" } },
+						{ word: "Calm", phonetic: "/kɑːm/", trans: { es: "Calma", en: "Calm" } }
+					]
+				},
+				{
+					id: "rule-silent-w",
+					categoryId: "silent-letters",
+					symbol: "Ø-W",
+					title: { 
+						es: "La letra 'W' muda", 
+						en: "Silent 'W' Rule" 
+					},
+					theory: {
+						es: "Cuando una palabra comienza con la combinación 'WR', la letra 'W' es totalmente muda. Se debe pronunciar directamente comenzando desde la 'R'.",
+						en: "When a word begins with the 'WR' cluster, the 'W' is totally silent. You must start vocalizing directly from the 'R'."
+					},
+					image: "images/sound20.jpg",
+					examples: [
+						{ word: "Write", phonetic: "/raɪt/", trans: { es: "Escribir", en: "Write" } },
+						{ word: "Wrong", phonetic: "/rɒŋ/", trans: { es: "Incorrecto", en: "Wrong" } },
+						{ word: "Wrist", phonetic: "/rɪst/", trans: { es: "Muñeca (anatomía)", en: "Wrist" } }
+					]
+				},
+				{
+					id: "rule-silent-gh",
+					categoryId: "silent-letters",
+					symbol: "Ø-GH",
+					title: { 
+						es: "El grupo 'GH' mudo", 
+						en: "Silent 'GH' Cluster" 
+					},
+					theory: {
+						es: "En muchas palabras, cuando 'GH' va seguido de una 'T' o está al final de la palabra después de una vocal (especialmente una i), es completamente mudo.",
+						en: "In many words, when 'GH' is followed by a 'T', or is at the end of the word after a vowel (especially an 'i'), it is completely silent."
+					},
+					image: "images/sound21.jpg",
+					examples: [
+						{ word: "Night", phonetic: "/naɪt/", trans: { es: "Noche", en: "Night" } },
+						{ word: "Thought", phonetic: "/θɔːt/", trans: { es: "Pensamiento / Pensó", en: "Thought" } },
+						{ word: "High", phonetic: "/haɪ/", trans: { es: "Alto", en: "High" } }
+					]
+				},
+				
+				// --- VOCALES CONTROLADAS POR LA R (BOSSY R) ---
+				{
+					id: "rule-ar-sound",
+					categoryId: "long-vowels",
+					symbol: "/ɑːr/",
+					title: { 
+						es: "El sonido 'AR'", 
+						en: "The 'AR' Sound" 
+					},
+					theory: {
+						es: "Cuando la letra 'A' va seguida de una 'R', la 'A' ya no suena como una 'a' corta. Se convierte en un sonido profundo que viene desde la garganta, abriendo bien la boca, como cuando el doctor te pide que digas 'Ahhhh'.",
+						en: "When the letter 'A' is followed by an 'R', it's no longer a short 'a'. It becomes a deep sound coming from the throat, with the mouth wide open, similar to saying 'Ahhhh' for a doctor."
+					},
+					image: "images/sound22.jpg",
+					examples: [
+						{ word: "Car", phonetic: "/kɑːr/", trans: { es: "Auto", en: "Car" } },
+						{ word: "Star", phonetic: "/stɑːr/", trans: { es: "Estrella", en: "Star" } },
+						{ word: "Hard", phonetic: "/hɑːrd/", trans: { es: "Duro / Difícil", en: "Hard" } }
+					]
+				},
+				{
+					id: "rule-or-sound",
+					categoryId: "long-vowels",
+					symbol: "/ɔːr/",
+					title: { 
+						es: "El sonido 'OR'", 
+						en: "The 'OR' Sound" 
+					},
+					theory: {
+						es: "La combinación 'OR' hace que los labios se redondeen firmemente hacia adelante. Es un sonido largo y tenso, mucho más cerrado que la 'O' del español.",
+						en: "The 'OR' combination requires your lips to be firmly rounded and pushed forward. It is a long, tense sound, much more closed than the Spanish 'O'."
+					},
+					image: "images/sound23.jpg",
+					examples: [
+						{ word: "Door", phonetic: "/dɔːr/", trans: { es: "Puerta", en: "Door" } },
+						{ word: "More", phonetic: "/mɔːr/", trans: { es: "Más", en: "More" } },
+						{ word: "Horse", phonetic: "/hɔːrs/", trans: { es: "Caballo", en: "Horse" } }
+					]
+				},
+				{
+					id: "rule-er-ir-ur-sound",
+					categoryId: "long-vowels",
+					symbol: "/ɜːr/",
+					title: { 
+						es: "El sonido unificado ER, IR, UR", 
+						en: "The Unified ER, IR, UR Sound" 
+					},
+					theory: {
+						es: "¡Esta es una regla de oro! Las combinaciones 'ER', 'IR' y 'UR' suenan exactamente igual. No intentes pronunciar la vocal; ve directamente desde la consonante anterior hacia una 'R' tensa americana.",
+						en: "Golden rule: The combinations 'ER', 'IR', and 'UR' sound exactly the same. Don't try to pronounce the vowel; go straight from the previous consonant into a tense American 'R'."
+					},
+					image: "images/sound24.jpg",
+					examples: [
+						{ word: "Bird", phonetic: "/bɜːrd/", trans: { es: "Pájaro", en: "Bird" } },
+						{ word: "Turn", phonetic: "/tɜːrn/", trans: { es: "Girar / Turno", en: "Turn" } },
+						{ word: "Her", phonetic: "/hɜːr/", trans: { es: "De ella / A ella", en: "Her" } }
+					]
+				},
+				{
+					id: "rule-air-sound",
+					categoryId: "diphthongs",
+					symbol: "/eər/",
+					title: { 
+						es: "El sonido 'AIR' / 'ARE'", 
+						en: "The 'AIR' / 'ARE' Sound" 
+					},
+					theory: {
+						es: "Este sonido es un diptongo controlado por la R. Comienza con el sonido de una 'E' abierta y luego la lengua se retrae rápidamente para hacer el sonido de la 'R'. Ocurre en terminaciones como -air o -are.",
+						en: "This is an R-controlled diphthong. It starts with an open 'E' sound, and then the tongue pulls back quickly for the 'R' sound. Found in endings like -air or -are."
+					},
+					image: "images/sound25.jpg",
+					examples: [
+						{ word: "Hair", phonetic: "/heər/", trans: { es: "Cabello", en: "Hair" } },
+						{ word: "Care", phonetic: "/keər/", trans: { es: "Cuidar / Importar", en: "Care" } },
+						{ word: "Bear", phonetic: "/beər/", trans: { es: "Oso", en: "Bear" } }
+					]
+				},
+				{
+					id: "rule-ear-sound",
+					categoryId: "diphthongs",
+					symbol: "/ɪər/",
+					title: { 
+						es: "El sonido 'EAR' / 'EER'", 
+						en: "The 'EAR' / 'EER' Sound" 
+					},
+					theory: {
+						es: "Comienza con una 'I' corta y relajada que se desliza suavemente hacia la 'R'. Presta atención, ya que no suena como la 'i' larga de 'see', sino más relajada antes de la R.",
+						en: "Begins with a short, relaxed 'I' that glides smoothly into the 'R'. Pay attention: it doesn't sound like the long 'i' in 'see', but is more relaxed before hitting the R."
+					},
+					image: "images/sound26.jpg",
+					examples: [
+						{ word: "Ear", phonetic: "/ɪər/", trans: { es: "Oreja", en: "Ear" } },
+						{ word: "Beer", phonetic: "/bɪər/", trans: { es: "Cerveza", en: "Beer" } },
+						{ word: "Here", phonetic: "/hɪər/", trans: { es: "Aquí", en: "Here" } }
+					]
+				},
+				// --- CONSONANTES DOBLES Y REDUCCIÓN ---
+				{
+					id: "rule-double-consonants",
+					categoryId: "advanced-rules",
+					symbol: "BB, TT, LL",
+					title: { 
+						es: "Consonantes Dobles", 
+						en: "Double Consonants" 
+					},
+					theory: {
+						es: "A diferencia del español (como la 'LL' o 'RR'), en inglés las consonantes dobles NO representan un sonido nuevo ni más largo. Su función es indicarnos que la vocal que está justo ANTES de ellas se debe pronunciar de forma CORTA.",
+						en: "Unlike some languages, double consonants in English do not create a new or longer sound. Their primary function is to indicate that the preceding vowel should be pronounced as a SHORT vowel."
+					},
+					image: "images/sound27.jpg",
+					examples: [
+						{ word: "Apple", phonetic: "/ˈæpəl/", trans: { es: "Manzana", en: "Apple" } },
+						{ word: "Letter", phonetic: "/ˈlɛtər/", trans: { es: "Carta / Letra", en: "Letter" } },
+						{ word: "Summer", phonetic: "/ˈsʌmər/", trans: { es: "Verano", en: "Summer" } }
+					]
+				},
+								
+				// --- COMBINACIÓN DE CONSONANTES (CLUSTERS) ---
+				{
+					id: "rule-s-clusters",
+					categoryId: "consonants",
+					symbol: "ST, SP, SK, STR",
+					title: { 
+						es: "Grupos consonánticos con 'S' inicial", 
+						en: "Initial 'S' Consonant Clusters" 
+					},
+					theory: {
+						es: "¡Regla vital! En inglés, NUNCA se pone un sonido de 'E' antes de una 'S' inicial. Debes comenzar directamente con el siseo de la serpiente (ssss) y conectar inmediatamente con la siguiente consonante.",
+						en: "Crucial rule! In English, NEVER add an 'E' sound before an initial 'S'. You must start directly with the snake hiss (ssss) and immediately connect to the next consonant."
+					},
+					image: "images/sound28.jpg",
+					examples: [
+						{ word: "Stop", phonetic: "/stɒp/", trans: { es: "Detenerse", en: "Stop" } },
+						{ word: "School", phonetic: "/skuːl/", trans: { es: "Escuela", en: "School" } },
+						{ word: "Street", phonetic: "/striːt/", trans: { es: "Calle", en: "Street" } }
+					]
+				},
+				{
+					id: "rule-liquid-clusters",
+					categoryId: "consonants",
+					symbol: "BL, FL, GL, PL",
+					title: { 
+						es: "Grupos con 'L' (L-Blends)", 
+						en: "L-Blends" 
+					},
+					theory: {
+						es: "Cuando una consonante va seguida de 'L', el sonido debe fluir sin ninguna vocal en medio. La lengua sube rápidamente hacia el paladar para bloquear el aire.",
+						en: "When a consonant is followed by 'L', the sound must flow without any vowel in between. The tongue rises quickly to the roof of the mouth to block the air."
+					},
+					image: "images/sound29.jpg",
+					examples: [
+						{ word: "Black", phonetic: "/blæk/", trans: { es: "Negro", en: "Black" } },
+						{ word: "Fly", phonetic: "/flaɪ/", trans: { es: "Volar / Mosca", en: "Fly" } },
+						{ word: "Glass", phonetic: "/ɡlæs/", trans: { es: "Vaso / Vidrio", en: "Glass" } }
+					]
+				},
+				{
+					id: "rule-final-clusters",
+					categoryId: "consonants",
+					symbol: "-ND, -NT, -ST",
+					title: { 
+						es: "Grupos consonánticos finales", 
+						en: "Final Consonant Clusters" 
+					},
+					theory: {
+						es: "Asegúrate de pronunciar AMBAS consonantes al final de la palabra. Los hablantes de español tienden a omitir la última letra (diciendo 'sen' en lugar de 'send'). ¡Marca esa T o D final!",
+						en: "Make sure to pronounce BOTH consonants at the end of the word. Spanish speakers tend to omit the last letter. Emphasize that final T or D!"
+					},
+					image: "images/sound30.jpg",
+					examples: [
+						{ word: "Send", phonetic: "/sɛnd/", trans: { es: "Enviar", en: "Send" } },
+						{ word: "Fast", phonetic: "/fɑːst/", trans: { es: "Rápido", en: "Fast" } },
+						{ word: "Plant", phonetic: "/plænt/", trans: { es: "Planta", en: "Plant" } }
+					]
+				},
+				
+				// --- REGLAS DE ACENTUACIÓN (WORD STRESS) ---
+				{
+					id: "rule-noun-vs-verb-stress",
+					categoryId: "advanced-rules",
+					symbol: "RE-cord vs re-CORD",
+					title: { 
+						es: "El cambio de acento: Sustantivo vs. Verbo", 
+						en: "Stress Shift: Noun vs. Verb" 
+					},
+					theory: {
+						es: "Muchas palabras de dos sílabas cambian de significado según dónde pongas el acento. Si acentúas la PRIMERA sílaba, es un SUSTANTIVO. Si acentúas la SEGUNDA sílaba, es un VERBO.",
+						en: "Many two-syllable words change meaning depending on stress. Stressing the FIRST syllable makes it a NOUN. Stressing the SECOND syllable makes it a VERB."
+					},
+					image: "images/sound31.png",
+					examples: [
+						{ word: "Record (Noun)", phonetic: "/ˈrɛkərd/", trans: { es: "Registro / Disco", en: "Record (Noun)" } },
+						{ word: "Record (Verb)", phonetic: "/rɪˈkɔːrd/", trans: { es: "Grabar", en: "Record (Verb)" } },
+						{ word: "Present (Noun)", phonetic: "/ˈprɛzənt/", trans: { es: "Regalo / Presente", en: "Present (Noun)" } }
+					]
+				},
+				{
+					id: "rule-tion-sion-stress",
+					categoryId: "advanced-rules",
+					symbol: "-TION / -SION",
+					title: { 
+						es: "Acentuación antes de -TION / -SION", 
+						en: "Stress before -TION / -SION" 
+					},
+					theory: {
+						es: "Cuando una palabra termina en los sufijos -tion, -sion o -cian, el acento fuerte recae SIEMPRE en la sílaba inmediatamente ANTERIOR al sufijo.",
+						en: "When a word ends in the suffixes -tion, -sion, or -cian, the primary stress ALWAYS falls on the syllable immediately PRECEDING the suffix."
+					},
+					image: "images/sound32.png",
+					examples: [
+						{ word: "Information", phonetic: "/ˌɪnfərˈmeɪʃən/", trans: { es: "Información", en: "Information" } },
+						{ word: "Decision", phonetic: "/dɪˈsɪʒən/", trans: { es: "Decisión", en: "Decision" } },
+						{ word: "Musician", phonetic: "/mjuːˈzɪʃən/", trans: { es: "Músico", en: "Musician" } }
+					]
+				},
+				{
+					id: "rule-compound-nouns-stress",
+					categoryId: "advanced-rules",
+					symbol: "Word + Word",
+					title: { 
+						es: "Sustantivos Compuestos", 
+						en: "Compound Nouns Stress" 
+					},
+					theory: {
+						es: "Un sustantivo compuesto está formado por dos palabras unidas. En el 90% de los casos, el acento fuerte cae en la PRIMERA parte de la palabra (el primer componente).",
+						en: "A compound noun is made of two words joined together. In 90% of cases, the primary stress falls on the FIRST part of the word."
+					},
+					image: "images/sound33.png",
+					examples: [
+						{ word: "Greenhouse", phonetic: "/ˈɡriːnhaʊs/", trans: { es: "Invernadero", en: "Greenhouse" } },
+						{ word: "Toothbrush", phonetic: "/ˈtuːθbrʌʃ/", trans: { es: "Cepillo de dientes", en: "Toothbrush" } },
+						{ word: "Footprint", phonetic: "/ˈfʊtprɪnt/", trans: { es: "Huella", en: "Footprint" } }
+					]
+				},
+								
+				
+				// --- LA 'E' MÁGICA Y PATRONES DE VOCALES ---
+				{
+					id: "rule-magic-e",
+					categoryId: "long-vowels",
+					symbol: "Vocal + Consonante + E",
+					title: { 
+						es: "La 'E' Mágica (Silent E)", 
+						en: "The Magic 'E' (Silent E)" 
+					},
+					theory: {
+						es: "Cuando una palabra corta termina en vocal + consonante + 'E', la 'E' final es completamente muda. Pero su 'magia' consiste en hacer que la vocal anterior suene LARGA (dice su nombre en el alfabeto).",
+						en: "When a short word ends in a Vowel + Consonant + 'E' pattern, the final 'E' is silent. Its 'magic' is that it makes the preceding vowel LONG (it says its alphabet name)."
+					},
+					image: "images/sound34.jpg",
+					examples: [
+						{ word: "Tape", phonetic: "/teɪp/", trans: { es: "Cinta (tap -> tape)", en: "Tape" } },
+						{ word: "Kite", phonetic: "/kaɪt/", trans: { es: "Cometa (kit -> kite)", en: "Kite" } },
+						{ word: "Hope", phonetic: "/hoʊp/", trans: { es: "Esperanza (hop -> hope)", en: "Hope" } }
+					]
+				},
+				// --- CONSONANTES MUTANTES (C y G) ---
+				{
+					id: "rule-soft-c",
+					categoryId: "consonants",
+					symbol: "C = /s/",
+					title: { 
+						es: "La 'C' Suave", 
+						en: "Soft 'C' Sound" 
+					},
+					theory: {
+						es: "Si la letra 'C' va inmediatamente seguida de las letras 'E', 'I' o 'Y', cambia su sonido fuerte de /k/ por un sonido suave de /s/ (como una serpiente).",
+						en: "If the letter 'C' is immediately followed by the letters 'E', 'I', or 'Y', it changes its hard /k/ sound to a soft /s/ sound (like a snake)."
+					},
+					image: "images/sound35.jpg",
+					examples: [
+						{ word: "City", phonetic: "/ˈsɪti/", trans: { es: "Ciudad", en: "City" } },
+						{ word: "Center", phonetic: "/ˈsɛntər/", trans: { es: "Centro", en: "Center" } },
+						{ word: "Bicycle", phonetic: "/ˈbaɪsɪkəl/", trans: { es: "Bicicleta", en: "Bicycle" } }
+					]
+				},
+				{
+					id: "rule-hard-c",
+					categoryId: "consonants",
+					symbol: "C = /k/",
+					title: { 
+						es: "La 'C' Fuerte", 
+						en: "Hard 'C' Sound" 
+					},
+					theory: {
+						es: "Si la letra 'C' va seguida de cualquier otra letra (A, O, U o cualquier consonante), mantiene su sonido fuerte natural, como la 'K'.",
+						en: "If the letter 'C' is followed by any other letter (A, O, U, or any consonant), it maintains its natural hard sound, like a 'K'."
+					},
+					image: "images/sound36.jpg",
+					examples: [
+						{ word: "Cat", phonetic: "/kæt/", trans: { es: "Gato", en: "Cat" } },
+						{ word: "Cold", phonetic: "/koʊld/", trans: { es: "Frío", en: "Cold" } },
+						{ word: "Cup", phonetic: "/kʌp/", trans: { es: "Taza", en: "Cup" } }
+					]
+				},
+				{
+					id: "rule-soft-g",
+					categoryId: "consonants",
+					symbol: "G = /dʒ/",
+					title: { 
+						es: "La 'G' Suave", 
+						en: "Soft 'G' Sound" 
+					},
+					theory: {
+						es: "Al igual que la C, si la letra 'G' va seguida de 'E', 'I' o 'Y', generalmente toma un sonido suave que se parece a la 'Y' fuerte o 'J' del inglés /dʒ/.",
+						en: "Similar to 'C', if the letter 'G' is followed by 'E', 'I', or 'Y', it generally takes a soft sound, similar to a strong 'J' sound /dʒ/."
+					},
+					image: "images/sound37.png",
+					examples: [
+						{ word: "Gym", phonetic: "/dʒɪm/", trans: { es: "Gimnasio", en: "Gym" } },
+						{ word: "Giant", phonetic: "/ˈdʒaɪənt/", trans: { es: "Gigante", en: "Giant" } },
+						{ word: "Page", phonetic: "/peɪdʒ/", trans: { es: "Página", en: "Page" } }
+					]
+				},
+				// --- EL SONIDO NASAL VELAR ---
+				{
+					id: "rule-ng-nasal",
+					categoryId: "advanced-rules",
+					symbol: "/ŋ/",
+					title: { 
+						es: "El sonido nasal 'NG'", 
+						en: "The Nasal 'NG' Sound" 
+					},
+					theory: {
+						es: "El grupo 'NG' al final de una palabra NO se pronuncia como una 'N' y luego una 'G'. Es un sonido único donde la parte posterior de la lengua toca el velo del paladar, y el sonido sale por la nariz.",
+						en: "The 'NG' cluster at the end of a word is NOT pronounced as an 'N' followed by a 'G'. It's a single sound where the back of the tongue touches the soft palate, sending sound through the nose."
+					},
+					image: "images/sound38.jpg",
+					examples: [
+						{ word: "Sing", phonetic: "/sɪŋ/", trans: { es: "Cantar", en: "Sing" } },
+						{ word: "King", phonetic: "/kɪŋ/", trans: { es: "Rey", en: "King" } },
+						{ word: "Going", phonetic: "/ˈɡoʊɪŋ/", trans: { es: "Yendo", en: "Going" } }
+					]
+				},
+				
+				// --- LETRAS MUDAS INTERMEDIAS ---
+				{
+					id: "rule-silent-h",
+					categoryId: "silent-letters",
+					symbol: "Ø-H",
+					title: { 
+						es: "La letra 'H' muda", 
+						en: "Silent 'H' Rule" 
+					},
+					theory: {
+						es: "Aunque la 'H' suele sonar como un leve suspiro (como en 'Hello'), en ciertas palabras de origen latino o francés, y después de una 'W' o 'G', es 100% muda.",
+						en: "Although 'H' usually sounds like a soft sigh (as in 'Hello'), in certain words of Latin or French origin, and after a 'W' or 'G', it is 100% silent."
+					},
+					image: "images/sound39.jpg",
+					examples: [
+						{ word: "Honest", phonetic: "/ˈɒnɪst/", trans: { es: "Honesto", en: "Honest" } },
+						{ word: "Hour", phonetic: "/ˈaʊər/", trans: { es: "Hora", en: "Hour" } },
+						{ word: "Ghost", phonetic: "/ɡoʊst/", trans: { es: "Fantasma", en: "Ghost" } },
+						{ word: "What", phonetic: "/wɒt/", trans: { es: "Qué", en: "What" } }
+					]
+				},
+				{
+					id: "rule-silent-t-middle",
+					categoryId: "silent-letters",
+					symbol: "Ø-T (Middle)",
+					title: { 
+						es: "La 'T' muda en medio de la palabra", 
+						en: "Silent 'T' in the Middle" 
+					},
+					theory: {
+						es: "En combinaciones como '-sten' y '-stle', la letra 'T' desaparece por completo para facilitar la pronunciación. Se salta directamente de la 'S' a la siguiente vocal o consonante.",
+						en: "In clusters like '-sten' and '-stle', the letter 'T' disappears entirely to make pronunciation easier. You jump directly from the 'S' to the next sound."
+					},
+					image: "images/sound40.jpg",
+					examples: [
+						{ word: "Listen", phonetic: "/ˈlɪsən/", trans: { es: "Escuchar", en: "Listen" } },
+						{ word: "Castle", phonetic: "/ˈkæsəl/", trans: { es: "Castillo", en: "Castle" } },
+						{ word: "Often", phonetic: "/ˈɒfən/", trans: { es: "A menudo (T opcional, mayormente muda)", en: "Often" } }
+					]
+				},
+				{
+					id: "rule-silent-u",
+					categoryId: "silent-letters",
+					symbol: "Ø-U",
+					title: { 
+						es: "La letra 'U' muda", 
+						en: "Silent 'U' Rule" 
+					},
+					theory: {
+						es: "Cuando la letra 'U' va después de una 'G' y antes de otra vocal, su única función es hacer que la 'G' suene fuerte (como en Gato). La 'U' en sí misma no se pronuncia.",
+						en: "When the letter 'U' comes after a 'G' and before another vowel, its only function is to make the 'G' sound hard (like in 'Go'). The 'U' itself is not vocalized."
+					},
+					image: "images/sound41.jpg",
+					examples: [
+						{ word: "Guess", phonetic: "/ɡɛs/", trans: { es: "Adivinar", en: "Guess" } },
+						{ word: "Guitar", phonetic: "/ɡɪˈtɑːr/", trans: { es: "Guitarra", en: "Guitar" } },
+						{ word: "Building", phonetic: "/ˈbɪldɪŋ/", trans: { es: "Edificio", en: "Building" } }
+					]
+				},
+												
+				
+				// --- SONIDOS PROBLEMÁTICOS ---
+				{
+					id: "rule-v-vs-b",
+					categoryId: "consonants",
+					symbol: "/v/ vs /b/",
+					title: { 
+						es: "La diferencia entre V y B", 
+						en: "The difference between V and B" 
+					},
+					theory: {
+						es: "En español suenan igual, pero en inglés son totalmente distintas. Para la 'V', debes morder suavemente tu labio inferior y hacer vibrar el aire (como el motor de un auto). La 'B' se hace explotando ambos labios juntos.",
+						en: "In Spanish they sound the same, but in English they are completely distinct. For the 'V', you must gently bite your lower lip and vibrate the air. The 'B' is made by popping both lips together."
+					},
+					image: "images/sound42.jpg",
+					examples: [
+						{ word: "Very", phonetic: "/ˈvɛri/", trans: { es: "Muy (mordiendo el labio)", en: "Very" } },
+						{ word: "Berry", phonetic: "/ˈbɛri/", trans: { es: "Baya (juntando labios)", en: "Berry" } },
+						{ word: "Voice", phonetic: "/vɔɪs/", trans: { es: "Voz", en: "Voice" } }
+					]
+				},
+				{
+					id: "rule-sh-vs-ch",
+					categoryId: "consonants",
+					symbol: "/ʃ/ vs /tʃ/",
+					title: { 
+						es: "La fricativa SH vs la explosiva CH", 
+						en: "Fricative SH vs Explosive CH" 
+					},
+					theory: {
+						es: "El sonido 'SH' (como pedir silencio: shhhh) es continuo y suave, el aire fluye. El sonido 'CH' (como estornudar: ¡achú!) es explosivo y corto; la lengua detiene el aire por un microsegundo y luego lo suelta de golpe.",
+						en: "The 'SH' sound is continuous and smooth, the air flows. The 'CH' sound is explosive and short; the tongue stops the air for a microsecond and then releases it abruptly."
+					},
+					image: "images/sound43.jpg",
+					examples: [
+						{ word: "Shoe", phonetic: "/ʃuː/", trans: { es: "Zapato (flujo suave)", en: "Shoe" } },
+						{ word: "Chew", phonetic: "/tʃuː/", trans: { es: "Masticar (explosivo)", en: "Chew" } },
+						{ word: "Sheep", phonetic: "/ʃiːp/", trans: { es: "Oveja", en: "Sheep" } },
+						{ word: "Cheap", phonetic: "/tʃiːp/", trans: { es: "Barato", en: "Cheap" } }
+					]
+				},
+				{
+					id: "rule-y-glide",
+					categoryId: "consonants",
+					symbol: "/j/",
+					title: { 
+						es: "La 'Y' suave (Glide)", 
+						en: "The Soft 'Y' Glide" 
+					},
+					theory: {
+						es: "¡Nunca pronuncies la 'Y' inglesa como la 'LL' o 'Y' fuerte de México o España (como en 'lluvia')! En inglés, suena exactamente igual a una vocal 'i' suave que se desliza rápido hacia la siguiente vocal (ej. i-es).",
+						en: "Never pronounce the English 'Y' like a strong Spanish 'LL' or 'Y'. In English, it sounds exactly like a soft vowel 'i' gliding quickly into the next vowel."
+					},
+					image: "images/sound44.jpg",
+					examples: [
+						{ word: "Yes", phonetic: "/jɛs/", trans: { es: "Sí (suena como 'i-es')", en: "Yes" } },
+						{ word: "Yellow", phonetic: "/ˈjɛloʊ/", trans: { es: "Amarillo", en: "Yellow" } },
+						{ word: "You", phonetic: "/juː/", trans: { es: "Tú", en: "You" } }
+					]
+				},
+				{
+					id: "rule-z-vibration",
+					categoryId: "consonants",
+					symbol: "/z/",
+					title: { 
+						es: "El zumbido de la letra 'Z'", 
+						en: "The Buzz of the letter 'Z'" 
+					},
+					theory: {
+						es: "En español de Latinoamérica, pronunciamos la 'Z' igual que la 'S'. En inglés esto es un error. La 'Z' siempre debe vibrar en la garganta, exactamente igual que el zumbido de una abeja o un mosquito.",
+						en: "In Latin American Spanish, 'Z' is pronounced like 'S'. In English, this is an error. The 'Z' must always vibrate in the throat, exactly like a bee's buzz."
+					},
+					image: "images/sound45.jpg",
+					examples: [
+						{ word: "Zoo", phonetic: "/zuː/", trans: { es: "Zoológico", en: "Zoo" } },
+						{ word: "Zero", phonetic: "/ˈzɪəroʊ/", trans: { es: "Cero", en: "Zero" } },
+						{ word: "Lazy", phonetic: "/ˈleɪzi/", trans: { es: "Perezoso", en: "Lazy" } }
+					]
+				},
+				
+				
+				
+				// --- HABLA CONECTADA (CONNECTED SPEECH) ---
+				{
+					id: "rule-linking-c-v",
+					categoryId: "advanced-rules",
+					symbol: "C ➔ V",
+					title: { 
+						es: "Enlace: Consonante a Vocal", 
+						en: "Linking: Consonant to Vowel" 
+					},
+					theory: {
+						es: "En inglés fluido, cuando una palabra termina en consonante y la siguiente empieza con vocal, se unen como si fueran una sola palabra. 'Hold on' no se pausa, suena como 'Hol-don'.",
+						en: "In fluent English, when a word ends in a consonant and the next begins with a vowel, they link together as one word. 'Hold on' is pronounced smoothly as 'Hol-don'."
+					},
+					image: "images/sound46.jpg",
+					examples: [
+						{ word: "Hold on", phonetic: "/hoʊld‿ɒn/", trans: { es: "Espera / Aguanta", en: "Hold on" } },
+						{ word: "Come in", phonetic: "/kʌm‿ɪn/", trans: { es: "Pasa / Entra", en: "Come in" } },
+						{ word: "Take off", phonetic: "/teɪk‿ɔːf/", trans: { es: "Despegar / Quitar", en: "Take off" } }
+					]
+				},
+				{
+					id: "rule-assimilation-ty",
+					categoryId: "advanced-rules",
+					symbol: "T + Y = /tʃ/",
+					title: { 
+						es: "Fusión: T + Y = CH", 
+						en: "Assimilation: T + Y = CH" 
+					},
+					theory: {
+						es: "Cuando una palabra termina con el sonido 'T' y la siguiente empieza con 'Y' (muy común con la palabra 'you'), los sonidos chocan y se fusionan creando un sonido de 'CH'.",
+						en: "When a word ends with a 'T' sound and the next begins with a 'Y' (very common with 'you'), the sounds crash and merge, creating a 'CH' sound."
+					},
+					image: "images/sound47.jpg",
+					examples: [
+						{ word: "Meet you", phonetic: "/ˈmiːtʃu/", trans: { es: "Conocerte (Mee-choo)", en: "Meet you" } },
+						{ word: "Don't you", phonetic: "/ˈdoʊntʃu/", trans: { es: "¿No es así? (Don-choo)", en: "Don't you" } },
+						{ word: "Can't you", phonetic: "/ˈkæntʃu/", trans: { es: "¿No puedes? (Can-choo)", en: "Can't you" } }
+					]
+				},
+				{
+					id: "rule-assimilation-dy",
+					categoryId: "advanced-rules",
+					symbol: "D + Y = /dʒ/",
+					title: { 
+						es: "Fusión: D + Y = J", 
+						en: "Assimilation: D + Y = J" 
+					},
+					theory: {
+						es: "Similar a la regla anterior. Cuando un sonido 'D' se encuentra con una 'Y', se fusionan creando el sonido de la 'J' inglesa suave (como en la palabra Gym o Jeans).",
+						en: "Similar to the previous rule. When a 'D' sound meets a 'Y', they merge to create the soft English 'J' sound (like in Gym or Jeans)."
+					},
+					image: "images/sound48.jpg",
+					examples: [
+						{ word: "Did you", phonetic: "/ˈdɪdʒu/", trans: { es: "¿Lo hiciste? (Di-joo)", en: "Did you" } },
+						{ word: "Would you", phonetic: "/ˈwʊdʒu/", trans: { es: "¿Lo harías? (Wu-joo)", en: "Would you" } },
+						{ word: "Could you", phonetic: "/ˈkʊdʒu/", trans: { es: "¿Podrías? (Ku-joo)", en: "Could you" } }
+					]
+				},
+						
+
+				// --- VOCALES ESPECIALES Y DOBLES ---
+				{
+					id: "rule-oo-short",
+					categoryId: "short-vowels",
+					symbol: "/ʊ/ (Short OO)",
+					title: { 
+						es: "La Doble 'OO' Corta", 
+						en: "The Short 'OO' Sound" 
+					},
+					theory: {
+						es: "A veces, la doble 'O' produce un sonido muy corto y relajado. Tus labios no deben redondearse mucho; se parece a una mezcla entre una 'U' y una 'O' en español. Común antes de la letra K o D.",
+						en: "Sometimes, the double 'O' produces a very short, relaxed sound. Your lips shouldn't round too much; it's somewhere between a U and an O. Common before K or D."
+					},
+					image: "images/sound49.jpg",
+					examples: [
+						{ word: "Book", phonetic: "/bʊk/", trans: { es: "Libro", en: "Book" } },
+						{ word: "Look", phonetic: "/lʊk/", trans: { es: "Mirar", en: "Look" } },
+						{ word: "Good", phonetic: "/ɡʊd/", trans: { es: "Bueno", en: "Good" } }
+					]
+				},
+				{
+					id: "rule-aw-au",
+					categoryId: "long-vowels",
+					symbol: "/ɔː/",
+					title: { 
+						es: "El sonido de 'AW' y 'AU'", 
+						en: "The 'AW' and 'AU' Sound" 
+					},
+					theory: {
+						es: "Cuando veas las letras 'AW' o 'AU', olvídate de la 'a' y de la 'w'. Este patrón siempre produce un sonido de 'O' alargada, profunda y bajando un poco la mandíbula.",
+						en: "When you see the letters 'AW' or 'AU', forget about the 'A' and the 'W'. This pattern always produces a long, deep 'O' sound, dropping the jaw slightly."
+					},
+					image: "images/sound50.jpg",
+					examples: [
+						{ word: "Law", phonetic: "/lɔː/", trans: { es: "Ley", en: "Law" } },
+						{ word: "Draw", phonetic: "/drɔː/", trans: { es: "Dibujar", en: "Draw" } },
+						{ word: "Author", phonetic: "/ˈɔːθər/", trans: { es: "Autor", en: "Author" } }
+					]
+				},
+				
+				// --- LA L OSCURA Y REDUCCIONES ---
+				{
+					id: "rule-dark-l",
+					categoryId: "consonants",
+					symbol: "/ɫ/ (Dark L)",
+					title: { 
+						es: "La 'L' Oscura (Dark L)", 
+						en: "The Dark 'L' Sound" 
+					},
+					theory: {
+						es: "Cuando la 'L' está al final de una palabra o después de una vocal, NO se pronuncia con la punta de la lengua en los dientes como en español. Se hace creando tensión en la parte POSTERIOR de la garganta, sonando profundo.",
+						en: "When 'L' is at the end of a word or after a vowel, it is NOT pronounced with the tip of the tongue on the teeth. It is made by creating tension in the BACK of the throat, sounding hollow and deep."
+					},
+					image: "images/sound51.jpg",
+					examples: [
+						{ word: "Ball", phonetic: "/bɔːɫ/", trans: { es: "Pelota", en: "Ball" } },
+						{ word: "Milk", phonetic: "/mɪɫk/", trans: { es: "Leche", en: "Milk" } },
+						{ word: "Cold", phonetic: "/koʊɫd/", trans: { es: "Frío", en: "Cold" } }
+					]
+				},
+				{
+					id: "rule-have-reduction",
+					categoryId: "advanced-rules",
+					symbol: "'ve = /əv/",
+					title: { 
+						es: "Reducción del verbo 'Have' en pasado", 
+						en: "Reduction of 'Have' in modals" 
+					},
+					theory: {
+						es: "En el habla cotidiana, los nativos reducen drásticamente la palabra 'have' cuando acompaña a un modal (should, could, would). Pasa de sonar como 'Jav' a simplemente el sonido Schwa más una 'v' suave: /əv/.",
+						en: "In casual speech, natives drastically reduce the word 'have' when attached to a modal. It goes from a full 'have' to just a Schwa plus a soft 'V': /əv/."
+					},
+					image: "images/sound52.jpg",
+					examples: [
+						{ word: "Should've", phonetic: "/ˈʃʊdəv/", trans: { es: "Debería haber (Should have)", en: "Should've" } },
+						{ word: "Could've", phonetic: "/ˈkʊdəv/", trans: { es: "Podría haber (Could have)", en: "Could've" } },
+						{ word: "Would've", phonetic: "/ˈwʊdəv/", trans: { es: "Habría (Would have)", en: "Would've" } }
+					]
+				},
+				
+				
+				// --- SÍLABAS MUDAS (ELISIÓN) ---
+				{
+					id: "rule-elision-table",
+					categoryId: "advanced-rules",
+					symbol: "Ø-Syllable",
+					title: { 
+						es: "Sílabas que desaparecen (Elisión)", 
+						en: "Dropped Syllables (Elision)" 
+					},
+					theory: {
+						es: "En palabras de tres o más sílabas, a menudo la vocal átona (débil) que está en el medio desaparece por completo en la pronunciación diaria. Se comprime la palabra para que fluya más rápido.",
+						en: "In words with three or more syllables, the unstressed middle vowel often disappears completely in everyday pronunciation. The word is compressed to flow faster."
+					},
+					image: "images/sound53.jpg",
+					examples: [
+						{ word: "Vegetable", phonetic: "/ˈvɛdʒtəbəl/", trans: { es: "Verdura (Veg-ta-ble, no Ve-ge-ta-ble)", en: "Vegetable" } },
+						{ word: "Comfortable", phonetic: "/ˈkʌmftərbəl/", trans: { es: "Cómodo (Comf-ta-ble)", en: "Comfortable" } },
+						{ word: "Interesting", phonetic: "/ˈɪntrəstɪŋ/", trans: { es: "Interesante (In-tres-ting)", en: "Interesting" } }
+					]
+				},
+				{
+					id: "rule-elision-ry",
+					categoryId: "advanced-rules",
+					symbol: "-ARY / -ORY",
+					title: { 
+						es: "Terminaciones -ARY y -ORY (Reino Unido vs EE.UU.)", 
+						en: "Endings -ARY and -ORY (UK vs US)" 
+					},
+					theory: {
+						es: "En inglés británico, la vocal antes de la 'r' en terminaciones como -ary u -ory suele ser completamente muda (ej. His-tri). En inglés americano, sí se pronuncia con un sonido de Schwa o 'E' suave (ej. His-to-ri).",
+						en: "In British English, the vowel before 'r' in endings like -ary or -ory is often completely silent. In American English, it is pronounced with a Schwa or soft 'E' sound."
+					},
+					image: "images/sound54.jpg",
+					examples: [
+						{ word: "History", phonetic: "/ˈhɪstəri/ (US) / /ˈhɪstri/ (UK)", trans: { es: "Historia", en: "History" } },
+						{ word: "Dictionary", phonetic: "/ˈdɪkʃəˌnɛri/ (US)", trans: { es: "Diccionario", en: "Dictionary" } },
+						{ word: "Factory", phonetic: "/ˈfæktəri/ (US) / /ˈfæktri/ (UK)", trans: { es: "Fábrica", en: "Factory" } }
+					]
+				},
+				
+				// --- LA PARADA GLOTAL ---
+				{
+					id: "rule-glottal-stop",
+					categoryId: "consonants",
+					symbol: "/ʔ/ (Glottal Stop)",
+					title: { 
+						es: "La Parada Glotal", 
+						en: "The Glottal Stop" 
+					},
+					theory: {
+						es: "En inglés americano, cuando la 'T' va seguida de una 'N' (como en -tain o -ton), la 'T' no se pronuncia con la lengua. El aire se corta bruscamente en la garganta (glotis) y luego sale por la nariz para la 'N'.",
+						en: "In American English, when 'T' is followed by an 'N', the 'T' is not tapped with the tongue. The air is abruptly stopped in the throat (glottis) and then released through the nose for the 'N'."
+					},
+					image: "images/sound55.jpg",
+					examples: [
+						{ word: "Mountain", phonetic: "/ˈmaʊnʔn/", trans: { es: "Montaña", en: "Mountain" } },
+						{ word: "Button", phonetic: "/ˈbʌtʔn/", trans: { es: "Botón", en: "Button" } },
+						{ word: "Cotton", phonetic: "/ˈkɒtʔn/", trans: { es: "Algodón", en: "Cotton" } }
+					]
+				},
+				
+				
+				// --- FORMAS DÉBILES (WEAK FORMS) ---
+				{
+					id: "rule-weak-to-for",
+					categoryId: "advanced-rules",
+					symbol: "/tə/ y /fər/",
+					title: { 
+						es: "Reducción de preposiciones (To, For)", 
+						en: "Preposition Reduction (To, For)" 
+					},
+					theory: {
+						es: "Las palabras 'to' y 'for' casi nunca se pronuncian con su vocal fuerte a menos que estén al final de la oración. En el medio, se reducen usando el sonido relajado Schwa (/ə/).",
+						en: "The words 'to' and 'for' are rarely pronounced with their full vowel sound unless they are at the end of a sentence. In the middle of speech, they reduce to a relaxed Schwa sound (/ə/)."
+					},
+					image: "images/sound91.png",
+					examples: [
+						{ word: "Go to bed", phonetic: "/ɡoʊ tə bɛd/", trans: { es: "Ir a la cama (Go-tuh-bed)", en: "Go to bed" } },
+						{ word: "For you", phonetic: "/fər juː/", trans: { es: "Para ti (Fer-you)", en: "For you" } },
+						{ word: "Time to go", phonetic: "/taɪm tə ɡoʊ/", trans: { es: "Hora de irse", en: "Time to go" } }
+					]
+				},
+				{
+					id: "rule-weak-and",
+					categoryId: "advanced-rules",
+					symbol: "/ən/",
+					title: { 
+						es: "Reducción de la conjunción 'And'", 
+						en: "Reduction of 'And'" 
+					},
+					theory: {
+						es: "La palabra 'and' es la que más se reduce en inglés. La 'd' desaparece por completo y la 'a' se convierte en Schwa, sonando simplemente como una 'N' o 'uhn' conectando dos palabras.",
+						en: "The word 'and' is heavily reduced in English. The 'D' disappears completely and the 'A' becomes a Schwa, sounding simply like an 'N' or 'uhn' connecting two words."
+					},
+					image: "images/sound92.png",
+					examples: [
+						{ word: "Rock and roll", phonetic: "/rɒk ən roʊl/", trans: { es: "Rock y roll (Rock-n-roll)", en: "Rock and roll" } },
+						{ word: "Black and white", phonetic: "/blæk ən waɪt/", trans: { es: "Blanco y negro", en: "Black and white" } },
+						{ word: "You and me", phonetic: "/juː ən miː/", trans: { es: "Tú y yo", en: "You and me" } }
+					]
+				},
+				
+				// --- DÍGRAFOS ENGAÑOSOS ---
+				{
+					id: "rule-ea-short",
+					categoryId: "short-vowels",
+					symbol: "EA = /ɛ/",
+					title: { 
+						es: "La excepción del equipo 'EA'", 
+						en: "The 'EA' Exception" 
+					},
+					theory: {
+						es: "Normalmente, 'EA' suena como una 'I' larga (ej. Meat, Read). Sin embargo, hay un grupo importante de palabras donde 'EA' rompe la regla y suena como una 'E' corta (como en la palabra española 'El').",
+						en: "Normally, 'EA' sounds like a long 'E' (e.g., Meat, Read). However, there is a significant group of words where 'EA' breaks the rule and sounds like a short 'E'."
+					},
+					image: "images/sound56.png",
+					examples: [
+						{ word: "Bread", phonetic: "/brɛd/", trans: { es: "Pan", en: "Bread" } },
+						{ word: "Head", phonetic: "/hɛd/", trans: { es: "Cabeza", en: "Head" } },
+						{ word: "Weather", phonetic: "/ˈwɛðər/", trans: { es: "Clima / Tiempo", en: "Weather" } },
+						{ word: "Health", phonetic: "/hɛlθ/", trans: { es: "Salud", en: "Health" } }
+					]
+				},
+				{
+					id: "rule-ou-ow",
+					categoryId: "diphthongs",
+					symbol: "/aʊ/",
+					title: { 
+						es: "El sonido de susto 'OU' y 'OW'", 
+						en: "The 'OU' and 'OW' Sound" 
+					},
+					theory: {
+						es: "Cuando veas las combinaciones 'OU' u 'OW', el sonido que debes hacer es como si te hubieras pellizcado o golpeado: ¡AU! Es un diptongo fuerte y abierto.",
+						en: "When you see the combinations 'OU' or 'OW', the sound you make is like you've been pinched: OUCH! It is a strong, open diphthong."
+					},
+					image: "images/sound62.png",
+					examples: [
+						{ word: "House", phonetic: "/haʊs/", trans: { es: "Casa", en: "House" } },
+						{ word: "Cow", phonetic: "/kaʊ/", trans: { es: "Vaca", en: "Cow" } },
+						{ word: "Out", phonetic: "/aʊt/", trans: { es: "Fuera", en: "Out" } }
+					]
+				},
+				
+				
+				// --- SUFIJOS Y TERMINACIONES ESPECIALES ---
+				{
+					id: "rule-suffix-ous",
+					categoryId: "advanced-rules",
+					symbol: "-OUS = /əs/",
+					title: { 
+						es: "El sufijo '-OUS'", 
+						en: "The '-OUS' Suffix" 
+					},
+					theory: {
+						es: "Cuando una palabra termina en '-ous', NUNCA se pronuncia 'ous' como en 'house'. Se reduce por completo al sonido Schwa más una 'S' suave: /əs/.",
+						en: "When a word ends in '-ous', it is NEVER pronounced 'ous' like in 'house'. It reduces completely to the Schwa sound plus a soft 'S': /əs/."
+					},
+					image: "images/sound93.png",
+					examples: [
+						{ word: "Dangerous", phonetic: "/ˈdeɪndʒərəs/", trans: { es: "Peligroso", en: "Dangerous" } },
+						{ word: "Nervous", phonetic: "/ˈnɜːrvəs/", trans: { es: "Nervioso", en: "Nervous" } },
+						{ word: "Famous", phonetic: "/ˈfeɪməs/", trans: { es: "Famoso", en: "Famous" } }
+					]
+				},
+				{
+					id: "rule-suffix-age",
+					categoryId: "advanced-rules",
+					symbol: "-AGE = /ɪdʒ/",
+					title: { 
+						es: "El sufijo '-AGE'", 
+						en: "The '-AGE' Suffix" 
+					},
+					theory: {
+						es: "Si '-age' está al final de una palabra de dos o más sílabas (no en monosílabas como 'page'), no suena como 'eich'. Suena como un sonido corto de 'I' seguido de una 'J' inglesa suave: /ɪdʒ/.",
+						en: "If '-age' is at the end of a multi-syllable word (not monosyllabic like 'page'), it doesn't sound like 'age'. It sounds like a short 'I' followed by a soft English 'J': /ɪdʒ/."
+					},
+					image: "images/sound94.png",
+					examples: [
+						{ word: "Village", phonetic: "/ˈvɪlɪdʒ/", trans: { es: "Pueblo / Aldea", en: "Village" } },
+						{ word: "Baggage", phonetic: "/ˈbæɡɪdʒ/", trans: { es: "Equipaje", en: "Baggage" } },
+						{ word: "Damage", phonetic: "/ˈdæmɪdʒ/", trans: { es: "Daño", en: "Damage" } }
+					]
+				},
+				{
+					id: "rule-suffix-ate",
+					categoryId: "advanced-rules",
+					symbol: "-ATE (Verb vs Noun)",
+					title: { 
+						es: "El camaleón '-ATE' (Verbo vs Sustantivo)", 
+						en: "The Chameleon '-ATE' (Verb vs Noun)" 
+					},
+					theory: {
+						es: "Esta terminación cambia. Si la palabra es un VERBO, se pronuncia fuerte como 'eɪt' (Educate). Pero si es un SUSTANTIVO o ADJETIVO, se reduce al sonido Schwa /ət/ (Climate).",
+						en: "This ending changes. If the word is a VERB, it's pronounced fully as 'eɪt' (Educate). But if it's a NOUN or ADJECTIVE, it reduces to the Schwa sound /ət/ (Climate)."
+					},
+					image: "images/sound95.png",
+					examples: [
+						{ word: "Educate (Verb)", phonetic: "/ˈɛdʒuˌkeɪt/", trans: { es: "Educar", en: "Educate" } },
+						{ word: "Climate (Noun)", phonetic: "/ˈklaɪmət/", trans: { es: "Clima", en: "Climate" } },
+						{ word: "Private (Adjective)", phonetic: "/ˈpraɪvət/", trans: { es: "Privado", en: "Private" } }
+					]
+				},
+				{
+					id: "rule-suffix-ture",
+					categoryId: "advanced-rules",
+					symbol: "-TURE = /tʃər/",
+					title: { 
+						es: "La terminación '-TURE'", 
+						en: "The '-TURE' Ending" 
+					},
+					theory: {
+						es: "Cuando veas '-ture' al final de una palabra, olvida la T y la U. Este bloque siempre produce el sonido explosivo de la 'CH' seguido directamente por la 'R' controlada: /tʃər/.",
+						en: "When you see '-ture' at the end of a word, forget the T and the U. This cluster always produces the explosive 'CH' sound followed directly by the controlled 'R': /tʃər/."
+					},
+					image: "images/sound96.png",
+					examples: [
+						{ word: "Picture", phonetic: "/ˈpɪktʃər/", trans: { es: "Imagen / Foto", en: "Picture" } },
+						{ word: "Nature", phonetic: "/ˈneɪtʃər/", trans: { es: "Naturaleza", en: "Nature" } },
+						{ word: "Future", phonetic: "/ˈfjuːtʃər/", trans: { es: "Futuro", en: "Future" } }
+					]
+				},
+				{
+					id: "rule-suffix-sure",
+					categoryId: "advanced-rules",
+					symbol: "-SURE = /ʒər/",
+					title: { 
+						es: "La terminación '-SURE'", 
+						en: "The '-SURE' Ending" 
+					},
+					theory: {
+						es: "Similar a '-ture', pero aquí se usa el sonido vibrante de fricción suave /ʒ/ (parecido a la 'll' en Argentina o Uruguay). Es un zumbido suave seguido de la R.",
+						en: "Similar to '-ture', but here we use the soft, vibrating fricative sound /ʒ/. It is a smooth buzz followed by the R."
+					},
+					image: "images/sound97.jpg",
+					examples: [
+						{ word: "Measure", phonetic: "/ˈmɛʒər/", trans: { es: "Medir / Medida", en: "Measure" } },
+						{ word: "Treasure", phonetic: "/ˈtrɛʒər/", trans: { es: "Tesoro", en: "Treasure" } },
+						{ word: "Pleasure", phonetic: "/ˈplɛʒər/", trans: { es: "Placer", en: "Pleasure" } }
+					]
+				},
+														
+				
+				// --- LETRAS MUDAS AVANZADAS ---
+				{
+					id: "rule-silent-p",
+					categoryId: "silent-letters",
+					symbol: "Ø-P",
+					title: { 
+						es: "La letra 'P' muda", 
+						en: "Silent 'P' Rule" 
+					},
+					theory: {
+						es: "En palabras que provienen del griego, especialmente aquellas relacionadas con la mente o la ciencia (empezando con ps, pt, pn), la 'P' inicial es 100% muda.",
+						en: "In words originating from Greek, especially those related to the mind or science (starting with ps, pt, pn), the initial 'P' is 100% silent."
+					},
+					image: "images/sound84.jpg",
+					examples: [
+						{ word: "Psychology", phonetic: "/saɪˈkɒlədʒi/", trans: { es: "Psicología", en: "Psychology" } },
+						{ word: "Receipt", phonetic: "/rɪˈsiːt/", trans: { es: "Recibo (P muda en medio)", en: "Receipt" } },
+						{ word: "Pterodactyl", phonetic: "/ˌtɛrəˈdæktɪl/", trans: { es: "Pterodáctilo", en: "Pterodactyl" } }
+					]
+				},
+				{
+					id: "rule-silent-c",
+					categoryId: "silent-letters",
+					symbol: "Ø-C",
+					title: { 
+						es: "La letra 'C' muda (en SC)", 
+						en: "Silent 'C' in SC" 
+					},
+					theory: {
+						es: "En muchas palabras que contienen la combinación 'SC' antes de las vocales E o I, la 'C' es muda. Solo se pronuncia el sonido de la 'S'.",
+						en: "In many words containing the 'SC' cluster before the vowels E or I, the 'C' is silent. Only the 'S' sound is pronounced."
+					},
+					image: "images/sound85.jpg",
+					examples: [
+						{ word: "Muscle", phonetic: "/ˈmʌsəl/", trans: { es: "Músculo", en: "Muscle" } },
+						{ word: "Scissors", phonetic: "/ˈsɪzərz/", trans: { es: "Tijeras", en: "Scissors" } },
+						{ word: "Science", phonetic: "/ˈsaɪəns/", trans: { es: "Ciencia", en: "Science" } }
+					]
+				},
+				{
+					id: "rule-silent-s",
+					categoryId: "silent-letters",
+					symbol: "Ø-S",
+					title: { 
+						es: "La letra 'S' muda", 
+						en: "Silent 'S' Rule" 
+					},
+					theory: {
+						es: "Hay unas pocas, pero muy comunes palabras en inglés donde la letra 'S' antes de una 'L' es totalmente muda, influenciadas históricamente por el idioma francés.",
+						en: "There are a few, but very common English words where the letter 'S' before an 'L' is totally silent, historically influenced by the French language."
+					},
+					image: "images/sound86.jpg",
+					examples: [
+						{ word: "Island", phonetic: "/ˈaɪlənd/", trans: { es: "Isla", en: "Island" } },
+						{ word: "Aisle", phonetic: "/aɪl/", trans: { es: "Pasillo", en: "Aisle" } },
+						{ word: "Debris", phonetic: "/dəˈbriː/", trans: { es: "Escombros (S final muda)", en: "Debris" } }
+					]
+				},
+				
+				
+				// --- CONSONANTES COMPUESTAS ---
+				{
+					id: "rule-x-unvoiced",
+					categoryId: "consonants",
+					symbol: "X = /ks/",
+					title: { 
+						es: "La 'X' sorda (/ks/)", 
+						en: "Unvoiced 'X' (/ks/)" 
+					},
+					theory: {
+						es: "La 'X' normalmente representa dos sonidos juntos: una K seguida de una S (/ks/). Esto ocurre al final de las palabras o cuando la sílaba que sigue a la X no lleva el acento fuerte.",
+						en: "The 'X' normally represents two sounds together: a K followed by an S (/ks/). This happens at the end of words or when the syllable following the X is unstressed."
+					},
+					image: "images/sound75.png",
+					examples: [
+						{ word: "Box", phonetic: "/bɒks/", trans: { es: "Caja", en: "Box" } },
+						{ word: "Fox", phonetic: "/fɒks/", trans: { es: "Zorro", en: "Fox" } },
+						{ word: "Expect", phonetic: "/ɪkˈspɛkt/", trans: { es: "Esperar (expectativa)", en: "Expect" } }
+					]
+				},
+				{
+					id: "rule-x-voiced",
+					categoryId: "consonants",
+					symbol: "X = /gz/",
+					title: { 
+						es: "La 'X' sonora (/gz/)", 
+						en: "Voiced 'X' (/gz/)" 
+					},
+					theory: {
+						es: "Si la 'X' está en medio de la palabra, rodeada de vocales, y la sílaba SIGUIENTE es la que lleva el acento fuerte, la X muta y se vuelve sonora: suena como una G más una Z vibrante (/gz/).",
+						en: "If the 'X' is in the middle of the word, surrounded by vowels, and the FOLLOWING syllable holds the primary stress, the X mutates and becomes voiced: /gz/."
+					},
+					image: "images/sound76.png",
+					examples: [
+						{ word: "Exam", phonetic: "/ɪɡˈzæm/", trans: { es: "Examen", en: "Exam" } },
+						{ word: "Exact", phonetic: "/ɪɡˈzækt/", trans: { es: "Exacto", en: "Exact" } },
+						{ word: "Example", phonetic: "/ɪɡˈzæmpəl/", trans: { es: "Ejemplo", en: "Example" } }
+					]
+				},
+				{
+					id: "rule-qu-cluster",
+					categoryId: "consonants",
+					symbol: "QU = /kw/",
+					title: { 
+						es: "El grupo 'QU'", 
+						en: "The 'QU' Cluster" 
+					},
+					theory: {
+						es: "A diferencia del español (donde 'que/qui' suena solo a K), en inglés la 'Q' casi siempre va acompañada de la 'U', y ambas forman el sonido compuesto /kw/ (como 'ku' rápido).",
+						en: "Unlike Spanish (where 'que/qui' sounds just like K), in English the 'Q' is almost always followed by 'U', and together they form the compound sound /kw/."
+					},
+					image: "images/sound77.png",
+					examples: [
+						{ word: "Quick", phonetic: "/kwɪk/", trans: { es: "Rápido", en: "Quick" } },
+						{ word: "Question", phonetic: "/ˈkwɛstʃən/", trans: { es: "Pregunta", en: "Question" } },
+						{ word: "Quiet", phonetic: "/ˈkwaɪət/", trans: { es: "Silencioso", en: "Quiet" } }
+					]
+				},
+				
+				// --- EQUIPOS DE VOCALES (VOWEL TEAMS) ---
+				{
+					id: "rule-ai-ay",
+					categoryId: "long-vowels",
+					symbol: "AI / AY = /eɪ/",
+					title: { 
+						es: "El equipo 'AI' y 'AY'", 
+						en: "The 'AI' and 'AY' Team" 
+					},
+					theory: {
+						es: "Cuando las vocales 'A' e 'I' (o 'Y') están juntas, la segunda vocal es muda y la 'A' suena larga (dice su nombre en inglés: /eɪ/). 'AY' se usa normalmente al final de la palabra.",
+						en: "When the vowels 'A' and 'I' (or 'Y') are together, the second vowel is silent and the 'A' makes its long sound (/eɪ/). 'AY' is typically used at the end of a word."
+					},
+					image: "images/sound64.png",
+					examples: [
+						{ word: "Rain", phonetic: "/reɪn/", trans: { es: "Lluvia", en: "Rain" } },
+						{ word: "Wait", phonetic: "/weɪt/", trans: { es: "Esperar", en: "Wait" } },
+						{ word: "Day", phonetic: "/deɪ/", trans: { es: "Día", en: "Day" } }
+					]
+				},
+				{
+					id: "rule-oa-oe",
+					categoryId: "long-vowels",
+					symbol: "OA / OE = /oʊ/",
+					title: { 
+						es: "El equipo 'OA' y 'OE'", 
+						en: "The 'OA' and 'OE' Team" 
+					},
+					theory: {
+						es: "Igual que la regla anterior. En las combinaciones 'OA' y 'OE', la letra 'O' dice su nombre en inglés (como un diptongo 'o-u') y la segunda vocal (A o E) es totalmente muda.",
+						en: "Just like the previous rule. In 'OA' and 'OE' combinations, the letter 'O' says its alphabet name (a diphthong /oʊ/) and the second vowel (A or E) is totally silent."
+					},
+					image: "images/sound65.png",
+					examples: [
+						{ word: "Boat", phonetic: "/boʊt/", trans: { es: "Bote / Barco", en: "Boat" } },
+						{ word: "Soap", phonetic: "/soʊp/", trans: { es: "Jabón", en: "Soap" } },
+						{ word: "Toe", phonetic: "/toʊ/", trans: { es: "Dedo del pie", en: "Toe" } }
+					]
+				},
+				{
+					id: "rule-ee",
+					categoryId: "long-vowels",
+					symbol: "EE = /iː/",
+					title: { 
+						es: "La doble 'EE'", 
+						en: "The Double 'EE'" 
+					},
+					theory: {
+						es: "A diferencia de la doble O (que tiene variaciones), la doble 'EE' es una de las reglas más consistentes del inglés. Siempre produce un sonido de 'I' larga y tensa.",
+						en: "Unlike double O (which has variations), double 'EE' is one of the most consistent rules in English. It always produces a long, tense 'I' sound."
+					},
+					image: "images/sound66.png",
+					examples: [
+						{ word: "See", phonetic: "/siː/", trans: { es: "Ver", en: "See" } },
+						{ word: "Tree", phonetic: "/triː/", trans: { es: "Árbol", en: "Tree" } },
+						{ word: "Green", phonetic: "/ɡriːn/", trans: { es: "Verde", en: "Green" } }
+					]
+				},
+				
+				
+				// --- DÍGRAFOS CONSONÁNTICOS ---
+				{
+					id: "rule-ph-f",
+					categoryId: "consonants",
+					symbol: "PH = /f/",
+					title: { 
+						es: "La 'PH' suena como F", 
+						en: "'PH' sounds like F" 
+					},
+					theory: {
+						es: "Casi siempre que veas las letras 'PH' juntas, sobre todo en palabras de origen griego (muchas relacionadas con tecnología, ciencia o sonido), debes pronunciarlas como una 'F' fricativa normal.",
+						en: "Almost whenever you see the letters 'PH' together, especially in words of Greek origin (often related to tech, science, or sound), you must pronounce them as a regular fricative 'F'."
+					},
+					image: "images/sound78.png",
+					examples: [
+						{ word: "Phone", phonetic: "/foʊn/", trans: { es: "Teléfono", en: "Phone" } },
+						{ word: "Photo", phonetic: "/ˈfoʊtoʊ/", trans: { es: "Foto", en: "Photo" } },
+						{ word: "Graph", phonetic: "/ɡræf/", trans: { es: "Gráfico", en: "Graph" } }
+					]
+				},
+				{
+					id: "rule-ch-k",
+					categoryId: "consonants",
+					symbol: "CH = /k/",
+					title: { 
+						es: "La 'CH' con sonido de 'K'", 
+						en: "The 'CH' with a 'K' sound" 
+					},
+					theory: {
+						es: "Normalmente la CH es explosiva (como en 'Chair'). Sin embargo, en palabras de origen griego relativas a salud, educación o música, la 'CH' suena fuerte, exactamente como una 'K'.",
+						en: "Normally CH is explosive (like in 'Chair'). However, in Greek-origin words relating to health, education, or music, the 'CH' sounds hard, exactly like a 'K'."
+					},
+					image: "images/sound79.png",
+					examples: [
+						{ word: "School", phonetic: "/skuːl/", trans: { es: "Escuela", en: "School" } },
+						{ word: "Stomach", phonetic: "/ˈstʌmək/", trans: { es: "Estómago", en: "Stomach" } },
+						{ word: "Chorus", phonetic: "/ˈkɔːrəs/", trans: { es: "Coro", en: "Chorus" } }
+					]
+				},
+				{
+					id: "rule-ch-sh",
+					categoryId: "consonants",
+					symbol: "CH = /ʃ/",
+					title: { 
+						es: "La 'CH' con sonido de 'SH'", 
+						en: "The 'CH' with an 'SH' sound" 
+					},
+					theory: {
+						es: "Para confundir más las cosas, si la palabra viene del idioma francés, la 'CH' pierde su explosión y suena como un siseo largo y suave, igual que 'SH'.",
+						en: "To make things more confusing, if the word comes from the French language, the 'CH' loses its explosion and sounds like a long, smooth hush, just like 'SH'."
+					},
+					image: "images/sound80.jpg",
+					examples: [
+						{ word: "Machine", phonetic: "/məˈʃiːn/", trans: { es: "Máquina", en: "Machine" } },
+						{ word: "Chef", phonetic: "/ʃɛf/", trans: { es: "Cocinero", en: "Chef" } },
+						{ word: "Parachute", phonetic: "/ˈpærəʃuːt/", trans: { es: "Paracaídas", en: "Parachute" } }
+					]
+				},
+				{
+					id: "rule-gh-f",
+					categoryId: "consonants",
+					symbol: "GH = /f/",
+					title: { 
+						es: "El grupo 'GH' sonando a 'F'", 
+						en: "'GH' sounding like 'F'" 
+					},
+					theory: {
+						es: "Ya aprendimos que la 'GH' a menudo es muda (como en 'Night'). Pero al final de ciertas palabras (especialmente con terminaciones -ough o -augh), la 'GH' suena como la letra 'F'.",
+						en: "We already learned that 'GH' is often silent (like in 'Night'). But at the end of certain words (especially with -ough or -augh endings), 'GH' sounds like the letter 'F'."
+					},
+					image: "images/sound81.jpg",
+					examples: [
+						{ word: "Laugh", phonetic: "/læf/", trans: { es: "Reír", en: "Laugh" } },
+						{ word: "Tough", phonetic: "/tʌf/", trans: { es: "Duro / Difícil", en: "Tough" } },
+						{ word: "Enough", phonetic: "/ɪˈnʌf/", trans: { es: "Suficiente", en: "Enough" } }
+					]
+				},
+				
+				// --- LETRAS MUDAS EXTRAÑAS ---
+				{
+					id: "rule-silent-n",
+					categoryId: "silent-letters",
+					symbol: "Ø-N",
+					title: { 
+						es: "La letra 'N' muda", 
+						en: "Silent 'N' Rule" 
+					},
+					theory: {
+						es: "Cuando una palabra termina en la combinación 'MN', la letra 'N' es totalmente muda. Solo se pronuncia el sonido de la 'M' cerrando los labios.",
+						en: "When a word ends in the 'MN' combination, the letter 'N' is totally silent. You only pronounce the 'M' sound by closing your lips."
+					},
+					image: "images/sound87.jpg",
+					examples: [
+						{ word: "Autumn", phonetic: "/ˈɔːtəm/", trans: { es: "Otoño", en: "Autumn" } },
+						{ word: "Column", phonetic: "/ˈkɒləm/", trans: { es: "Columna", en: "Column" } },
+						{ word: "Damn", phonetic: "/dæm/", trans: { es: "Maldición (uso coloquial)", en: "Damn" } }
+					]
+				},
+				{
+					id: "rule-silent-d",
+					categoryId: "silent-letters",
+					symbol: "Ø-D",
+					title: { 
+						es: "La letra 'D' muda", 
+						en: "Silent 'D' Rule" 
+					},
+					theory: {
+						es: "La letra 'D' suele volverse muda cuando está combinada con consonantes fuertes, especialmente en los grupos '-DG' o en combinaciones de tres consonantes seguidas como en 'Wednesday'.",
+						en: "The letter 'D' often becomes silent when combined with strong consonants, especially in the '-DG' cluster or in clusters of three consecutive consonants like in 'Wednesday'."
+					},
+					image: "images/sound88.jpg",
+					examples: [
+						{ word: "Wednesday", phonetic: "/ˈwɛnzdeɪ/", trans: { es: "Miércoles", en: "Wednesday" } },
+						{ word: "Handsome", phonetic: "/ˈhænsəm/", trans: { es: "Guapo / Atractivo", en: "Handsome" } },
+						{ word: "Bridge", phonetic: "/brɪdʒ/", trans: { es: "Puente (La D no se marca)", en: "Bridge" } }
+					]
+				},
+				
+				// --- TERMINACIONES -TION Y -SION ---
+				{
+					id: "rule-tion-shun",
+					categoryId: "advanced-rules",
+					symbol: "-TION = /ʃən/",
+					title: { 
+						es: "La terminación '-TION'", 
+						en: "The '-TION' Ending" 
+					},
+					theory: {
+						es: "La terminación '-tion' es extremadamente común. Olvida la 'T' y la 'I'; este bloque siempre suena como 'SH' seguido del sonido Schwa y una 'N'. Suena como 'shun'.",
+						en: "The '-tion' ending is extremely common. Forget the 'T' and the 'I'; this cluster always sounds like 'SH' followed by the Schwa sound and an 'N'. It sounds like 'shun'."
+					},
+					image: "images/sound99.jpg",
+					examples: [
+						{ word: "Action", phonetic: "/ˈækʃən/", trans: { es: "Acción", en: "Action" } },
+						{ word: "Nation", phonetic: "/ˈneɪʃən/", trans: { es: "Nación", en: "Nation" } },
+						{ word: "Option", phonetic: "/ˈɒpʃən/", trans: { es: "Opción", en: "Option" } }
+					]
+				},
+				{
+					id: "rule-sion-zhun",
+					categoryId: "advanced-rules",
+					symbol: "-SION = /ʒən/",
+					title: { 
+						es: "La terminación '-SION' (Sonora)", 
+						en: "The Voiced '-SION' Ending" 
+					},
+					theory: {
+						es: "Cuando '-sion' va después de una vocal (como en 'vision'), la 'S' vibra y toma el sonido de fricción suave /ʒ/ (como la 'll' de Argentina). Suena como 'zhun'.",
+						en: "When '-sion' comes after a vowel (like in 'vision'), the 'S' vibrates and takes the soft fricative sound /ʒ/. It sounds like 'zhun'."
+					},
+					image: "images/sound100.jpg",
+					examples: [
+						{ word: "Vision", phonetic: "/ˈvɪʒən/", trans: { es: "Visión", en: "Vision" } },
+						{ word: "Decision", phonetic: "/dɪˈsɪʒən/", trans: { es: "Decisión", en: "Decision" } },
+						{ word: "Television", phonetic: "/ˈtɛlɪˌvɪʒən/", trans: { es: "Televisión", en: "Television" } }
+					]
+				},
+				{
+					id: "rule-sion-shun",
+					categoryId: "advanced-rules",
+					symbol: "-SION = /ʃən/",
+					title: { 
+						es: "La terminación '-SION' (Sorda)", 
+						en: "The Unvoiced '-SION' Ending" 
+					},
+					theory: {
+						es: "Pero, si '-sion' va después de una consonante (especialmente S o N, como en 'mission'), no vibra. Se pronuncia exactamente igual que '-tion' (/ʃən/).",
+						en: "However, if '-sion' comes after a consonant (especially S or N, like in 'mission'), it does not vibrate. It is pronounced exactly like '-tion' (/ʃən/)."
+					},
+					image: "images/sound101.jpg",
+					examples: [
+						{ word: "Mission", phonetic: "/ˈmɪʃən/", trans: { es: "Misión", en: "Mission" } },
+						{ word: "Expression", phonetic: "/ɪkˈsprɛʃən/", trans: { es: "Expresión", en: "Expression" } },
+						{ word: "Tension", phonetic: "/ˈtɛnʃən/", trans: { es: "Tensión", en: "Tension" } }
+					]
+				},
+				
+				// --- COMBINACIONES DE I y E ---
+				{
+					id: "rule-ie-long-e",
+					categoryId: "long-vowels",
+					symbol: "IE = /iː/",
+					title: { 
+						es: "El grupo 'IE' (Sonido I larga)", 
+						en: "The 'IE' Cluster (Long E sound)" 
+					},
+					theory: {
+						es: "La regla clásica es 'I antes de E, excepto después de C'. Cuando 'IE' están juntas, generalmente producen el sonido de la 'E' larga inglesa (nuestra 'I' del español).",
+						en: "The classic rule is 'I before E, except after C'. When 'IE' are together, they usually produce the long English 'E' sound."
+					},
+					image: "images/sound67.png",
+					examples: [
+						{ word: "Piece", phonetic: "/piːs/", trans: { es: "Pedazo / Pieza", en: "Piece" } },
+						{ word: "Believe", phonetic: "/bɪˈliːv/", trans: { es: "Creer", en: "Believe" } },
+						{ word: "Thief", phonetic: "/θiːf/", trans: { es: "Ladrón", en: "Thief" } }
+					]
+				},
+				{
+					id: "rule-ei-after-c",
+					categoryId: "long-vowels",
+					symbol: "EI = /iː/ o /eɪ/",
+					title: { 
+						es: "El grupo 'EI' (Después de C o sonido A)", 
+						en: "The 'EI' Cluster (After C or A sound)" 
+					},
+					theory: {
+						es: "Después de la letra C, el orden se invierte a 'EI' para mantener el sonido de 'I' larga (Receive). También se usa 'EI' cuando el sonido que buscamos es como una 'A' larga (como en 'Neighbor').",
+						en: "After the letter C, the order flips to 'EI' to keep the long 'E' sound (Receive). 'EI' is also used when the sound is a long 'A' (like in 'Neighbor')."
+					},
+					image: "images/sound68.png",
+					examples: [
+						{ word: "Receive", phonetic: "/rɪˈsiːv/", trans: { es: "Recibir", en: "Receive" } },
+						{ word: "Ceiling", phonetic: "/ˈsiːlɪŋ/", trans: { es: "Techo", en: "Ceiling" } },
+						{ word: "Weigh", phonetic: "/weɪ/", trans: { es: "Pesar (Sonido de A larga)", en: "Weigh" } }
+					]
+				},
+
+				// --- VOCALES ENGAÑOSAS Y CONSONANTES MUTANTES ---
+				{
+					id: "rule-o-sounds-like-u",
+					categoryId: "short-vowels",
+					symbol: "O = /ʌ/",
+					title: { 
+						es: "La 'O' que suena como 'U' corta", 
+						en: "The 'O' that sounds like short 'U'" 
+					},
+					theory: {
+						es: "En muchas palabras muy antiguas y comunes en inglés, la letra 'O' no suena como /o/ ni como /a/. Suena como la 'U' corta /ʌ/ (el sonido relajado desde el estómago).",
+						en: "In many very old and common English words, the letter 'O' doesn't sound like /o/ or /a/. It sounds like the short 'U' /ʌ/ (the relaxed sound from the stomach)."
+					},
+					image: "images/sound57.png",
+					examples: [
+						{ word: "Son", phonetic: "/sʌn/", trans: { es: "Hijo", en: "Son" } },
+						{ word: "Month", phonetic: "/mʌnθ/", trans: { es: "Mes", en: "Month" } },
+						{ word: "Love", phonetic: "/lʌv/", trans: { es: "Amor", en: "Love" } },
+						{ word: "Money", phonetic: "/ˈmʌni/", trans: { es: "Dinero", en: "Money" } }
+					]
+				},
+				{
+					id: "rule-tu-mutation",
+					categoryId: "advanced-rules",
+					symbol: "TU = /tʃu/",
+					title: { 
+						es: "La mutación 'TU' a 'CH'", 
+						en: "The 'TU' to 'CH' Mutation" 
+					},
+					theory: {
+						es: "En medio de una palabra, cuando la 'T' va seguida de una 'U' (especialmente en terminaciones como -tual), la combinación muta a un sonido de 'CH' seguido de la U.",
+						en: "In the middle of a word, when 'T' is followed by a 'U' (especially in endings like -tual), the combination mutates to a 'CH' sound followed by the U."
+					},
+					image: "images/sound102.jpg",
+					examples: [
+						{ word: "Actual", phonetic: "/ˈæktʃuəl/", trans: { es: "Real / Verdadero", en: "Actual" } },
+						{ word: "Mutual", phonetic: "/ˈmjuːtʃuəl/", trans: { es: "Mutuo", en: "Mutual" } },
+						{ word: "Statue", phonetic: "/ˈstætʃuː/", trans: { es: "Estatua", en: "Statue" } }
+					]
+				},
+				{
+					id: "rule-du-mutation",
+					categoryId: "advanced-rules",
+					symbol: "DU = /dʒu/",
+					title: { 
+						es: "La mutación 'DU' a 'J'", 
+						en: "The 'DU' to 'J' Mutation" 
+					},
+					theory: {
+						es: "Al igual que la T muta a CH, cuando la 'D' va seguida de una 'U' en ciertas palabras, muta al sonido suave de la 'J' inglesa (/dʒ/).",
+						en: "Just like T mutates to CH, when 'D' is followed by a 'U' in certain words, it mutates to the soft English 'J' sound (/dʒ/)."
+					},
+					image: "images/sound103.jpg",
+					examples: [
+						{ word: "Education", phonetic: "/ˌɛdʒuˈkeɪʃən/", trans: { es: "Educación", en: "Education" } },
+						{ word: "Schedule", phonetic: "/ˈskɛdʒuːl/ (US)", trans: { es: "Horario", en: "Schedule" } },
+						{ word: "Individual", phonetic: "/ˌɪndɪˈvɪdʒuəl/", trans: { es: "Individual", en: "Individual" } }
+					]
+				},
+				
+				
+				// --- LA INFLUENCIA DE LA 'W' ---
+				{
+					id: "rule-wa-sound",
+					categoryId: "short-vowels",
+					symbol: "WA = /wɒ/",
+					title: { 
+						es: "La 'A' después de la 'W'", 
+						en: "The 'A' after 'W'" 
+					},
+					theory: {
+						es: "Normalmente, la 'A' corta suena como en 'Cat' (/æ/). Pero si va justo después de una 'W', muta y se pronuncia como una 'O' corta y abierta (/ɒ/ o /ɑː/).",
+						en: "Normally, short 'A' sounds like in 'Cat' (/æ/). But if it directly follows a 'W', it mutates and is pronounced as a short, open 'O' (/ɒ/ or /ɑː/)."
+					},
+					image: "images/sound58.png",
+					examples: [
+						{ word: "Water", phonetic: "/ˈwɔːtər/", trans: { es: "Agua", en: "Water" } },
+						{ word: "Want", phonetic: "/wɒnt/", trans: { es: "Querer", en: "Want" } },
+						{ word: "Wash", phonetic: "/wɒʃ/", trans: { es: "Lavar", en: "Wash" } }
+					]
+				},
+				{
+					id: "rule-wor-sound",
+					categoryId: "long-vowels",
+					symbol: "WOR = /wɜːr/",
+					title: { 
+						es: "El grupo 'WOR'", 
+						en: "The 'WOR' Cluster" 
+					},
+					theory: {
+						es: "Cuando veas 'WOR', no pronuncies la 'O'. La 'W' cambia la 'OR' para que suene exactamente igual que 'ER', 'IR', o 'UR' (el sonidoBossy R de 'Bird').",
+						en: "When you see 'WOR', do not pronounce the 'O'. The 'W' changes the 'OR' to sound exactly like 'ER', 'IR', or 'UR' (the Bossy R sound in 'Bird')."
+					},
+					image: "images/sound69.png",
+					examples: [
+						{ word: "Work", phonetic: "/wɜːrk/", trans: { es: "Trabajar", en: "Work" } },
+						{ word: "World", phonetic: "/wɜːrld/", trans: { es: "Mundo", en: "World" } },
+						{ word: "Word", phonetic: "/wɜːrd/", trans: { es: "Palabra", en: "Word" } }
+					]
+				},
+				
+				// --- FINALES EXTRANJEROS MUDOS ---
+				{
+					id: "rule-que-ending",
+					categoryId: "consonants",
+					symbol: "-QUE = /k/",
+					title: { 
+						es: "La terminación '-QUE'", 
+						en: "The '-QUE' Ending" 
+					},
+					theory: {
+						es: "En palabras de origen francés que terminan en '-que', olvida la U y la E. Todo ese bloque al final de la palabra se pronuncia simplemente como un sonido fuerte y seco de 'K'.",
+						en: "In French-origin words ending in '-que', ignore the U and the E. That entire cluster at the end of the word is pronounced simply as a hard, sharp 'K' sound."
+					},
+					image: "images/sound82.jpg",
+					examples: [
+						{ word: "Unique", phonetic: "/juːˈniːk/", trans: { es: "Único", en: "Unique" } },
+						{ word: "Antique", phonetic: "/ænˈtiːk/", trans: { es: "Antiguo / Antigüedad", en: "Antique" } },
+						{ word: "Technique", phonetic: "/tɛkˈniːk/", trans: { es: "Técnica", en: "Technique" } }
+					]
+				},
+				{
+					id: "rule-gue-ending",
+					categoryId: "consonants",
+					symbol: "-GUE = /ɡ/",
+					title: { 
+						es: "La terminación '-GUE'", 
+						en: "The '-GUE' Ending" 
+					},
+					theory: {
+						es: "Igual que la regla anterior, cuando una palabra termina en '-gue', la U y la E son totalmente mudas. Solo debes pronunciar el sonido de una 'G' fuerte.",
+						en: "Similar to the previous rule, when a word ends in '-gue', the U and E are totally silent. You only pronounce a hard 'G' sound."
+					},
+					image: "images/sound83.jpg",
+					examples: [
+						{ word: "League", phonetic: "/liːɡ/", trans: { es: "Liga", en: "League" } },
+						{ word: "Dialogue", phonetic: "/ˈdaɪəlɒɡ/", trans: { es: "Diálogo", en: "Dialogue" } },
+						{ word: "Colleague", phonetic: "/ˈkɒliːɡ/", trans: { es: "Colega", en: "Colleague" } }
+					]
+				},
+				
+				// --- ACENTUACIÓN AVANZADA ---
+				{
+					id: "rule-phrasal-verbs-stress",
+					categoryId: "advanced-rules",
+					symbol: "Verb + PARTICLE",
+					title: { 
+						es: "Acentuación en Phrasal Verbs", 
+						en: "Stress in Phrasal Verbs" 
+					},
+					theory: {
+						es: "En los Phrasal Verbs (verbos compuestos por dos palabras), el acento fuerte NUNCA recae en el verbo, sino en la PARTÍCULA (la segunda palabra: up, down, on, off).",
+						en: "In Phrasal Verbs (two-word verbs), the primary stress NEVER falls on the verb, but rather on the PARTICLE (the second word: up, down, on, off)."
+					},
+					image: "images/sound104.jpg",
+					examples: [
+						{ word: "Wake up", phonetic: "/weɪk ˈʌp/", trans: { es: "Despertar", en: "Wake up" } },
+						{ word: "Turn off", phonetic: "/tɜːrn ˈɔːf/", trans: { es: "Apagar", en: "Turn off" } },
+						{ word: "Sit down", phonetic: "/sɪt ˈdaʊn/", trans: { es: "Sentarse", en: "Sit down" } }
+					]
+				},
+				{
+					id: "rule-reflexive-stress",
+					categoryId: "advanced-rules",
+					symbol: "-SELF / -SELVES",
+					title: { 
+						es: "Acentuación en Pronombres Reflexivos", 
+						en: "Stress in Reflexive Pronouns" 
+					},
+					theory: {
+						es: "Cuando uses palabras que terminan en '-self' o '-selves' (como myself, themselves), la fuerza de la voz siempre debe ir en la terminación 'SELF', no en el pronombre inicial.",
+						en: "When using words ending in '-self' or '-selves' (like myself, themselves), the vocal stress must always fall on the 'SELF' ending, not the initial pronoun."
+					},
+					image: "images/sound105.jpg",
+					examples: [
+						{ word: "Myself", phonetic: "/maɪˈsɛlf/", trans: { es: "Yo mismo", en: "Myself" } },
+						{ word: "Themselves", phonetic: "/ðəmˈsɛlvz/", trans: { es: "Ellos mismos", en: "Themselves" } },
+						{ word: "Yourself", phonetic: "/jɔːrˈsɛlf/", trans: { es: "Tú mismo", en: "Yourself" } }
+					]
+				},
+				
+				// --- SUFIJOS QUE ALTERAN EL ACENTO ---
+				{
+					id: "rule-stress-ic",
+					categoryId: "advanced-rules",
+					symbol: "-IC / -ICAL",
+					title: { 
+						es: "Acentuación antes de -IC / -ICAL", 
+						en: "Stress before -IC / -ICAL" 
+					},
+					theory: {
+						es: "Cuando una palabra termina en '-ic' o '-ical', el acento fuerte (la sílaba tónica) SIEMPRE cae en la sílaba que está justo antes del sufijo. Esto cambia la pronunciación de la palabra original.",
+						en: "When a word ends in '-ic' or '-ical', the primary stress ALWAYS falls on the syllable immediately before the suffix. This shifts the stress from the root word."
+					},
+					image: "images/sound106.jpg",
+					examples: [
+						{ word: "Economic", phonetic: "/ˌiːkəˈnɒmɪk/", trans: { es: "Económico (viene de E-co-no-my)", en: "Economic" } },
+						{ word: "Specific", phonetic: "/spəˈsɪfɪk/", trans: { es: "Específico", en: "Specific" } },
+						{ word: "Logical", phonetic: "/ˈlɒdʒɪkəl/", trans: { es: "Lógico (viene de Lo-gic)", en: "Logical" } }
+					]
+				},
+				{
+					id: "rule-stress-ity",
+					categoryId: "advanced-rules",
+					symbol: "-ITY",
+					title: { 
+						es: "Acentuación antes de -ITY", 
+						en: "Stress before -ITY" 
+					},
+					theory: {
+						es: "Al igual que con '-ic', cualquier palabra que termine en '-ity' tendrá su acento más fuerte en la sílaba inmediatamente anterior al sufijo. La '-i-' de '-ity' siempre suena corta y relajada.",
+						en: "Just like with '-ic', any word ending in '-ity' will have its primary stress on the syllable immediately preceding the suffix. The '-i-' in '-ity' is short and relaxed."
+					},
+					image: "images/sound107.jpg",
+					examples: [
+						{ word: "Ability", phonetic: "/əˈbɪlɪti/", trans: { es: "Habilidad", en: "Ability" } },
+						{ word: "Community", phonetic: "/kəˈmjuːnɪti/", trans: { es: "Comunidad", en: "Community" } },
+						{ word: "Reality", phonetic: "/riˈælɪti/", trans: { es: "Realidad", en: "Reality" } }
+					]
+				},
+				
+				// --- HETERÓNIMOS (MISMA ESCRITURA, DISTINTA PRONUNCIACIÓN) ---
+				{
+					id: "rule-heteronym-read",
+					categoryId: "advanced-rules",
+					symbol: "READ (Present vs Past)",
+					title: { 
+						es: "El verbo 'Read' (Leer)", 
+						en: "The verb 'Read'" 
+					},
+					theory: {
+						es: "El verbo leer se escribe exactamente igual en presente y en pasado, pero su pronunciación cambia drásticamente. En presente suena como 'I' larga (/iː/), y en pasado suena como 'E' corta (como el color Red).",
+						en: "The verb 'to read' is spelled exactly the same in present and past tense, but its pronunciation changes drastically. In present it's a long 'E' (/iː/), and in past it's a short 'E' (like the color Red)."
+					},
+					image: "images/sound108.jpg",
+					examples: [
+						{ word: "Read (Present)", phonetic: "/riːd/", trans: { es: "Leo / Lee", en: "Read (Present)" } },
+						{ word: "Read (Past)", phonetic: "/rɛd/", trans: { es: "Leí / Leyó", en: "Read (Past)" } }
+					]
+				},
+				{
+					id: "rule-heteronym-live",
+					categoryId: "advanced-rules",
+					symbol: "LIVE (Verb vs Adj)",
+					title: { 
+						es: "La palabra 'Live'", 
+						en: "The word 'Live'" 
+					},
+					theory: {
+						es: "Si es un VERBO (vivir), se pronuncia con la 'I' corta (/ɪ/). Si es un ADJETIVO (en vivo / directo), se pronuncia con el diptongo 'AI' (/aɪ/) haciendo que la 'E' final ejerza su magia.",
+						en: "If it's a VERB (to live), it's pronounced with a short 'I' (/ɪ/). If it's an ADJECTIVE (live broadcast), it's pronounced with the 'AI' diphthong (/aɪ/) using the Magic E rule."
+					},
+					image: "images/sound109.jpg",
+					examples: [
+						{ word: "Live (Verb)", phonetic: "/lɪv/", trans: { es: "Vivir", en: "Live (Verb)" } },
+						{ word: "Live (Adjective)", phonetic: "/laɪv/", trans: { es: "En vivo", en: "Live (Adjective)" } }
+					]
+				},
+				{
+					id: "rule-heteronym-tear",
+					categoryId: "advanced-rules",
+					symbol: "TEAR (Cry vs Rip)",
+					title: { 
+						es: "La palabra 'Tear'", 
+						en: "The word 'Tear'" 
+					},
+					theory: {
+						es: "Otra palabra de doble cara. Si significa 'Lágrima' (sustantivo), rima con 'Ear' (/ɪər/). Si significa 'Rasgar/Romper' (verbo), rima con 'Bear' o 'Hair' (/eər/).",
+						en: "Another two-faced word. If it means a drop from the eye (noun), it rhymes with 'Ear' (/ɪər/). If it means to rip (verb), it rhymes with 'Bear' or 'Hair' (/eər/)."
+					},
+					image: "images/sound110.jpg",
+					examples: [
+						{ word: "Tear (Cry)", phonetic: "/tɪər/", trans: { es: "Lágrima", en: "Tear (Noun)" } },
+						{ word: "Tear (Rip)", phonetic: "/teər/", trans: { es: "Rasgar / Romper", en: "Tear (Verb)" } }
+					]
+				},
+				
+				
+				// --- EL GRUPO "OUGH" ---
+				{
+					id: "rule-ough-o",
+					categoryId: "long-vowels",
+					symbol: "OUGH = /oʊ/",
+					title: { 
+						es: "OUGH sonando a 'O' larga", 
+						en: "OUGH sounding like long 'O'" 
+					},
+					theory: {
+						es: "En varias palabras comunes, todo el bloque 'OUGH' simplemente produce el sonido del diptongo 'O-U' (la 'O' diciendo su nombre en inglés). La G y la H son totalmente mudas.",
+						en: "In several common words, the entire 'OUGH' block simply produces the 'O-U' diphthong sound. The G and H are totally silent."
+					},
+					image: "images/sound70.png",
+					examples: [
+						{ word: "Though", phonetic: "/ðoʊ/", trans: { es: "Aunque", en: "Though" } },
+						{ word: "Although", phonetic: "/ɔːlˈðoʊ/", trans: { es: "A pesar de que", en: "Although" } },
+						{ word: "Dough", phonetic: "/doʊ/", trans: { es: "Masa (de pan)", en: "Dough" } }
+					]
+				},
+				{
+					id: "rule-ough-u",
+					categoryId: "long-vowels",
+					symbol: "OUGH = /uː/",
+					title: { 
+						es: "OUGH sonando a 'U' larga", 
+						en: "OUGH sounding like long 'U'" 
+					},
+					theory: {
+						es: "En otras palabras, el bloque 'OUGH' cambia radicalmente y suena como una 'U' larga y pura, con los labios bien redondeados.",
+						en: "In other words, the 'OUGH' block changes radically and sounds like a pure, long 'U', with lips tightly rounded."
+					},
+					image: "images/sound71.png",
+					examples: [
+						{ word: "Through", phonetic: "/θruː/", trans: { es: "A través de", en: "Through" } }
+					]
+				},
+				{
+					id: "rule-ough-awt",
+					categoryId: "long-vowels",
+					symbol: "OUGHT = /ɔːt/",
+					title: { 
+						es: "OUGH seguido de T (OUGHT)", 
+						en: "OUGH followed by T (OUGHT)" 
+					},
+					theory: {
+						es: "Cuando 'OUGH' va seguido de una 'T', la G y la H siguen siendo mudas, pero las vocales suenan como una 'O' profunda y alargada cayendo la mandíbula (/ɔː/).",
+						en: "When 'OUGH' is followed by a 'T', G and H remain silent, but the vowels sound like a deep, elongated 'O' dropping the jaw (/ɔː/)."
+					},
+					image: "images/sound72.png",
+					examples: [
+						{ word: "Thought", phonetic: "/θɔːt/", trans: { es: "Pensamiento / Pensé", en: "Thought" } },
+						{ word: "Bought", phonetic: "/bɔːt/", trans: { es: "Compró (pasado de Buy)", en: "Bought" } },
+						{ word: "Brought", phonetic: "/brɔːt/", trans: { es: "Trajo (pasado de Bring)", en: "Brought" } }
+					]
+				},
+												
+				// --- EXCEPCIONES Y ANOMALÍAS DE VOCALES ---
+				{
+					id: "rule-a-sounds-like-e",
+					categoryId: "short-vowels",
+					symbol: "A = /ɛ/",
+					title: { 
+						es: "La 'A' que suena como 'E'", 
+						en: "The 'A' that sounds like 'E'" 
+					},
+					theory: {
+						es: "En dos de las palabras más usadas del inglés (Any y Many), la letra 'A' no suena como /æ/ ni como /eɪ/. Rompe las reglas y suena exactamente como una 'E' corta del español.",
+						en: "In two of the most commonly used words (Any and Many), the letter 'A' breaks the rules and sounds exactly like a short Spanish 'E'."
+					},
+					image: "images/sound59.png",
+					examples: [
+						{ word: "Any", phonetic: "/ˈɛni/", trans: { es: "Cualquier / Algún", en: "Any" } },
+						{ word: "Many", phonetic: "/ˈmɛni/", trans: { es: "Muchos", en: "Many" } },
+						{ word: "Anything", phonetic: "/ˈɛniˌθɪŋ/", trans: { es: "Cualquier cosa", en: "Anything" } }
+					]
+				},
+				{
+					id: "rule-o-sounds-like-i",
+					categoryId: "short-vowels",
+					symbol: "O = /ɪ/",
+					title: { 
+						es: "La anomalía de la palabra 'Women'", 
+						en: "The 'Women' anomaly" 
+					},
+					theory: {
+						es: "Esta es la excepción más famosa del inglés. En la palabra 'Women' (Mujeres en plural), la letra 'O' suena como una 'I' corta (/ɪ/). No se pronuncia 'Wo-men', se pronuncia 'Wih-men'.",
+						en: "This is the most famous exception in English. In the plural word 'Women', the letter 'O' sounds like a short 'I' (/ɪ/). It is not pronounced 'Wo-men', but 'Wih-men'."
+					},
+					image: "images/sound60.png",
+					examples: [
+						{ word: "Women", phonetic: "/ˈwɪmɪn/", trans: { es: "Mujeres (Plural)", en: "Women" } },
+						{ word: "Woman", phonetic: "/ˈwʊmən/", trans: { es: "Mujer (Singular - La O suena como U corta)", en: "Woman" } }
+					]
+				},
+				
+				// --- ACENTUACIÓN EN PREFIJOS ---
+				{
+					id: "rule-prefix-unstressed",
+					categoryId: "advanced-rules",
+					symbol: "UN- / DIS- / RE-",
+					title: { 
+						es: "Prefijos débiles", 
+						en: "Unstressed Prefixes" 
+					},
+					theory: {
+						es: "En la mayoría de los verbos y adjetivos, los prefijos (la parte inicial que se añade a una palabra) NO llevan el acento fuerte. Se pronuncian rápido y débil, dándole toda la fuerza a la palabra raíz.",
+						en: "In most verbs and adjectives, prefixes (the initial part added to a word) do NOT carry the primary stress. They are pronounced quickly and weakly, giving all the power to the root word."
+					},
+					image: "images/sound111.jpg",
+					examples: [
+						{ word: "Unhappy", phonetic: "/ʌnˈhæpi/", trans: { es: "Infeliz", en: "Unhappy" } },
+						{ word: "Discover", phonetic: "/dɪˈskʌvər/", trans: { es: "Descubrir", en: "Discover" } },
+						{ word: "Rewrite", phonetic: "/ˌriːˈraɪt/", trans: { es: "Reescribir", en: "Rewrite" } }
+					]
+				},
+				{
+					id: "rule-prefix-pre-noun",
+					categoryId: "advanced-rules",
+					symbol: "PRE- (Noun vs Verb)",
+					title: { 
+						es: "El prefijo 'PRE-' (Sustantivo vs Verbo)", 
+						en: "The 'PRE-' Prefix (Noun vs Verb)" 
+					},
+					theory: {
+						es: "Sigue la regla de Sustantivo vs Verbo. Si la palabra con prefijo es un sustantivo, el prefijo se acentúa fuertemente (PRE-sent). Si es un verbo, el prefijo es débil (pre-SENT).",
+						en: "Follows the Noun vs Verb rule. If the prefixed word is a noun, the prefix is heavily stressed (PRE-sent). If it's a verb, the prefix is weak (pre-SENT)."
+					},
+					image: "images/sound112.jpg",
+					examples: [
+						{ word: "Prefix (Noun)", phonetic: "/ˈpriːfɪks/", trans: { es: "Prefijo", en: "Prefix" } },
+						{ word: "Predict (Verb)", phonetic: "/prɪˈdɪkt/", trans: { es: "Predecir", en: "Predict" } },
+						{ word: "Prepare (Verb)", phonetic: "/prɪˈpeər/", trans: { es: "Preparar", en: "Prepare" } }
+					]
+				},
+				
+				
+				
+				// --- REDUCCIONES INFORMALES (SLANG & CONNECTED SPEECH) ---
+				{
+					id: "rule-gonna-wanna",
+					categoryId: "advanced-rules",
+					symbol: "Gonna / Wanna",
+					title: { 
+						es: "Reducciones: Going to / Want to", 
+						en: "Reductions: Going to / Want to" 
+					},
+					theory: {
+						es: "En el habla rápida e informal, 'Going to' se convierte en 'Gonna' y 'Want to' se convierte en 'Wanna'. Estas formas NUNCA se usan en escritura formal, pero son el estándar de pronunciación hablada.",
+						en: "In fast, casual speech, 'Going to' becomes 'Gonna' and 'Want to' becomes 'Wanna'. These forms are NEVER used in formal writing, but are the standard for spoken pronunciation."
+					},
+					image: "images/sound113.jpg",
+					examples: [
+						{ word: "Gonna", phonetic: "/ˈɡɒnə/", trans: { es: "Voy a (Going to)", en: "Gonna" } },
+						{ word: "Wanna", phonetic: "/ˈwɒnə/", trans: { es: "Quiero (Want to)", en: "Wanna" } },
+						{ word: "Gotta", phonetic: "/ˈɡɒtə/", trans: { es: "Tengo que (Got to)", en: "Gotta" } }
+					]
+				},
+				{
+					id: "rule-gimme-lemme",
+					categoryId: "advanced-rules",
+					symbol: "Gimme / Lemme",
+					title: { 
+						es: "Fusión con el pronombre 'Me'", 
+						en: "Fusion with pronoun 'Me'" 
+					},
+					theory: {
+						es: "Cuando verbos terminados en consonantes fuertes se encuentran con la palabra 'Me', la consonante a menudo se asimila. 'Give me' se vuelve 'Gimme' (sin la V) y 'Let me' se vuelve 'Lemme' (sin la T).",
+						en: "When verbs ending in strong consonants meet the word 'Me', the consonant often assimilates. 'Give me' becomes 'Gimme' (dropping the V) and 'Let me' becomes 'Lemme' (dropping the T)."
+					},
+					image: "images/sound114.jpg",
+					examples: [
+						{ word: "Gimme", phonetic: "/ˈɡɪmi/", trans: { es: "Dame (Give me)", en: "Gimme" } },
+						{ word: "Lemme", phonetic: "/ˈlɛmi/", trans: { es: "Déjame (Let me)", en: "Lemme" } },
+						{ word: "Dunno", phonetic: "/dəˈnoʊ/", trans: { es: "No sé (Don't know)", en: "Dunno" } }
+					]
+				},
+				
+				// --- LA LETRA 'Y' COMO VOCAL AL FINAL ---
+				{
+					id: "rule-y-long-e",
+					categoryId: "long-vowels",
+					symbol: "Y = /iː/",
+					title: { 
+						es: "La 'Y' final en palabras largas", 
+						en: "Final 'Y' in long words" 
+					},
+					theory: {
+						es: "Cuando la letra 'Y' está al final de una palabra de dos o más sílabas (polísilaba), casi siempre toma el sonido de una 'I' larga y tensa del inglés.",
+						en: "When the letter 'Y' is at the end of a word with two or more syllables, it almost always takes the long, tense English 'E' sound."
+					},
+					image: "images/sound73.png",
+					examples: [
+						{ word: "Happy", phonetic: "/ˈhæpi/", trans: { es: "Feliz", en: "Happy" } },
+						{ word: "Family", phonetic: "/ˈfæmɪli/", trans: { es: "Familia", en: "Family" } },
+						{ word: "Party", phonetic: "/ˈpɑːrti/", trans: { es: "Fiesta", en: "Party" } }
+					]
+				},
+				{
+					id: "rule-y-long-i",
+					categoryId: "diphthongs",
+					symbol: "Y = /aɪ/",
+					title: { 
+						es: "La 'Y' final en palabras cortas", 
+						en: "Final 'Y' in short words" 
+					},
+					theory: {
+						es: "Cuando la 'Y' está al final de una palabra muy corta (de una sola sílaba), rompe la regla anterior y toma el sonido del diptongo 'AI' (como la 'I' en español cuando dices ¡Ay!).",
+						en: "When 'Y' is at the end of a very short, one-syllable word, it breaks the previous rule and takes the diphthong 'AI' sound."
+					},
+					image: "images/sound63.png",
+					examples: [
+						{ word: "Cry", phonetic: "/kraɪ/", trans: { es: "Llorar", en: "Cry" } },
+						{ word: "Sky", phonetic: "/skaɪ/", trans: { es: "Cielo", en: "Sky" } },
+						{ word: "Why", phonetic: "/waɪ/", trans: { es: "Por qué", en: "Why" } }
+					]
+				},
+				
+				
+				// Agrega esto a tu array de reglas después de las anteriores
+				{
+					id: "rule-suffix-ize", categoryId: "advanced-rules", symbol: "-IZE / -ISE",
+					title: { es: "El sufijo -IZE / -ISE", en: "The -IZE / -ISE suffix" },
+					theory: { es: "La Z vibra (/z/), la S es sorda (/s/) en UK, pero en US ambas suelen vibrar.", en: "Z vibrates (/z/), S is unvoiced (/s/) in UK, but in US both often vibrate." },
+					image: "images/sound115.jpg",
+					examples: [
+						{ word: "Realize", phonetic: "/ˈriːəlaɪz/", trans: { es: "Darse cuenta", en: "Realize" } },
+						{ word: "Organize", phonetic: "/ˈɔːrɡənaɪz/", trans: { es: "Organizar", en: "Organize" } }
+					]
+				},
+				{
+					id: "rule-prefix-re", categoryId: "advanced-rules", symbol: "RE- (Again)",
+					title: { es: "Prefijo RE- (repetir)", en: "RE- prefix (again)" },
+					theory: { es: "Cuando significa 'hacer de nuevo', el acento secundario recae en la RE-.", en: "When it means 'to do again', secondary stress falls on RE-." },
+					image: "images/sound116.jpg",
+					examples: [
+						{ word: "Re-do", phonetic: "/ˌriːˈduː/", trans: { es: "Rehacer", en: "Re-do" } },
+						{ word: "Re-play", phonetic: "/ˌriːˈpleɪ/", trans: { es: "Reproducir", en: "Re-play" } }
+					]
+				},
+				// ... (Puedes continuar este patrón para cubrir verbos, sufijos, etc.)
+
+				// --- RITMO Y ACENTUACIÓN EN ORACIONES (SENTENCE STRESS) ---
+                {
+                    id: "rule-rhythm-content",
+                    categoryId: "advanced-rules",
+                    symbol: "Content Words",
+                    title: { 
+                        es: "Acento en Palabras de Contenido", 
+                        en: "Content Words Stress" 
+                    },
+                    theory: {
+                        es: "El inglés es un idioma rítmico. Solo se acentúan (se dicen más fuerte y lento) las palabras que dan información clave: Sustantivos, Verbos principales, Adjetivos y Adverbios.",
+                        en: "English is a stress-timed language. You only stress (say louder and longer) the words that carry key information: Nouns, Main Verbs, Adjectives, and Adverbs."
+                    },
+                    image: "images/sound117.jpg",
+                    examples: [
+                        { word: "DOG chased CAT", phonetic: "/ˈdɒɡ tʃeɪst ˈkæt/", trans: { es: "El PERRO persiguió al GATO", en: "The DOG chased the CAT" } },
+                        { word: "BIG BLUE CAR", phonetic: "/ˈbɪɡ ˈbluː ˈkɑːr/", trans: { es: "Auto GRANDE y AZUL", en: "BIG BLUE CAR" } }
+                    ]
+                },
+                {
+                    id: "rule-rhythm-function",
+                    categoryId: "advanced-rules",
+                    symbol: "Function Words",
+                    title: { 
+                        es: "Reducción de Palabras Estructurales", 
+                        en: "Function Words Reduction" 
+                    },
+                    theory: {
+                        es: "Las palabras gramaticales (artículos, preposiciones, conjunciones, auxiliares) NO se acentúan. Se dicen muy rápido, bajando el volumen y a menudo usando el sonido Schwa (/ə/).",
+                        en: "Grammatical words (articles, prepositions, conjunctions, auxiliaries) are NOT stressed. They are spoken very quickly, lowering the volume and often using the Schwa sound (/ə/)."
+                    },
+                    image: "images/sound118.jpg",
+                    examples: [
+                        { word: "a cup of tea", phonetic: "/ə ˈkʌp əv ˈtiː/", trans: { es: "una taza de té (uh-CUP-uh-TEA)", en: "a cup of tea" } },
+                        { word: "to the store", phonetic: "/tə ðə ˈstɔːr/", trans: { es: "a la tienda (tuh-thuh-STORE)", en: "to the store" } }
+                    ]
+                },
+
+                // --- ENTONACIÓN (INTONATION) ---
+                {
+                    id: "rule-intonation-yesno",
+                    categoryId: "advanced-rules",
+                    symbol: "↗ (Rising)",
+                    title: { 
+                        es: "Entonación: Preguntas de Sí o No", 
+                        en: "Intonation: Yes/No Questions" 
+                    },
+                    theory: {
+                        es: "Cuando haces una pregunta cuya respuesta es 'Sí' o 'No' (ej. Are you...? Do you...?), el tono de tu voz DEBE subir al final de la oración ↗.",
+                        en: "When asking a question where the answer is 'Yes' or 'No' (e.g. Are you...? Do you...?), the pitch of your voice MUST rise at the end of the sentence ↗."
+                    },
+                    image: "images/sound119.jpg",
+                    examples: [
+                        { word: "Are you ready? ↗", phonetic: "/ɑːr ju ˈrɛdi ↗/", trans: { es: "¿Estás listo?", en: "Are you ready?" } },
+                        { word: "Do you like it? ↗", phonetic: "/du ju ˈlaɪk ɪt ↗/", trans: { es: "¿Te gusta?", en: "Do you like it?" } }
+                    ]
+                },
+                {
+                    id: "rule-intonation-wh",
+                    categoryId: "advanced-rules",
+                    symbol: "↘ (Falling)",
+                    title: { 
+                        es: "Entonación: Preguntas Abiertas (WH-)", 
+                        en: "Intonation: WH- Questions" 
+                    },
+                    theory: {
+                        es: "Las preguntas que empiezan con What, Where, When, Who o How buscan información. En estas, el tono de voz sube en la palabra clave y BAJA al final de la oración ↘.",
+                        en: "Questions starting with What, Where, When, Who, or How seek information. In these, the pitch rises on the key word and FALLS at the end of the sentence ↘."
+                    },
+                    image: "images/sound120.jpg",
+                    examples: [
+                        { word: "What's your name? ↘", phonetic: "/wɒts jər ˈneɪm ↘/", trans: { es: "¿Cuál es tu nombre?", en: "What's your name?" } },
+                        { word: "Where is he? ↘", phonetic: "/wɛər ɪz hi ↘/", trans: { es: "¿Dónde está él?", en: "Where is he?" } }
+                    ]
+                },
+                {
+                    id: "rule-intonation-lists",
+                    categoryId: "advanced-rules",
+                    symbol: "↗ ↗ ↘",
+                    title: { 
+                        es: "Entonación: Listas y Enumeraciones", 
+                        en: "Intonation: Lists" 
+                    },
+                    theory: {
+                        es: "Al enumerar cosas, tu voz debe subir ↗ en cada elemento para indicar que la lista continúa, y bajar ↘ en el último elemento para indicar que has terminado de hablar.",
+                        en: "When listing things, your voice should rise ↗ on each item to indicate the list continues, and fall ↘ on the last item to indicate you've finished speaking."
+                    },
+                    image: "images/sound122.jpg",
+                    examples: [
+                        { word: "One ↗, Two ↗, Three ↘", phonetic: "/wʌn↗, tuː↗, θriː↘/", trans: { es: "Uno, dos, tres.", en: "One, two, three." } },
+                        { word: "Milk ↗, Eggs ↗, Bread ↘", phonetic: "/mɪlk↗, ɛɡz↗, brɛd↘/", trans: { es: "Leche, huevos, pan.", en: "Milk, eggs, bread." } }
+                    ]
+                },
+
+                // --- ACENTO EMOCIONAL Y CONTRASTIVO ---
+                {
+                    id: "rule-contrastive-subject",
+                    categoryId: "advanced-rules",
+                    symbol: "Emphasis",
+                    title: { 
+                        es: "Acento Contrastivo: El Sujeto", 
+                        en: "Contrastive Stress: The Subject" 
+                    },
+                    theory: {
+                        es: "Puedes cambiar totalmente el significado de una frase dependiendo de qué palabra acentúes. Si acentúas el sujeto (ej. *I*), indicas que fuiste TÚ y no otra persona.",
+                        en: "You can completely change a sentence's meaning depending on which word you stress. Stressing the subject (e.g. *I*) implies it was YOU and not someone else."
+                    },
+                    image: "images/sound123.jpg",
+                    examples: [
+                        { word: "I didn't do it", phonetic: "/ˈaɪ dɪdnt du ɪt/", trans: { es: "YO no lo hice (alguien más lo hizo)", en: "I didn't do it (someone else did)" } },
+                        { word: "HE said that", phonetic: "/ˈhiː sɛd ðæt/", trans: { es: "ÉL dijo eso (no yo)", en: "HE said that" } }
+                    ]
+                },
+                {
+                    id: "rule-contrastive-verb",
+                    categoryId: "advanced-rules",
+                    symbol: "Emphasis",
+                    title: { 
+                        es: "Acento Contrastivo: La Acción", 
+                        en: "Contrastive Stress: The Action" 
+                    },
+                    theory: {
+                        es: "Usando la misma frase, si pones toda la fuerza de tu voz en el verbo, el significado cambia para enfatizar la acción específica (ej. Yo no lo HICE, solo lo pensé).",
+                        en: "Using the same sentence, if you put all vocal force on the verb, the meaning shifts to emphasize the specific action (e.g. I didn't DO it, I just thought it)."
+                    },
+                    image: "images/sound124.jpg",
+                    examples: [
+                        { word: "I didn't DO it", phonetic: "/aɪ dɪdnt ˈduː ɪt/", trans: { es: "Yo no lo HICE (solo lo vi)", en: "I didn't DO it (I just saw it)" } },
+                        { word: "I SAID that", phonetic: "/aɪ ˈsɛd ðæt/", trans: { es: "Yo DIJE eso (no lo escribí)", en: "I SAID that (I didn't write it)" } }
+                    ]
+                },
+                {
+                    id: "rule-auxiliary-emphasis",
+                    categoryId: "advanced-rules",
+                    symbol: "DO / DOES / DID",
+                    title: { 
+                        es: "Enfatizar con Verbos Auxiliares", 
+                        en: "Emphasis with Auxiliaries" 
+                    },
+                    theory: {
+                        es: "Normalmente los auxiliares se reducen. Pero si quieres contradecir a alguien o sonar muy seguro, agregas el auxiliar a una frase afirmativa y lo pronuncias FUERTE.",
+                        en: "Normally auxiliaries are reduced. But if you want to contradict someone or sound very certain, you add the auxiliary to a positive sentence and stress it HEAVILY."
+                    },
+                    image: "images/sound125.jpg",
+                    examples: [
+                        { word: "I DO like it", phonetic: "/aɪ ˈduː laɪk ɪt/", trans: { es: "SÍ que me gusta (en serio)", en: "I DO like it" } },
+                        { word: "He DID go", phonetic: "/hi ˈdɪd ɡoʊ/", trans: { es: "Él SÍ fue (te lo aseguro)", en: "He DID go" } }
+                    ]
+                },
+
+                // --- TAG QUESTIONS (PREGUNTAS DE CONFIRMACIÓN) ---
+                {
+                    id: "rule-intonation-tags-real",
+                    categoryId: "advanced-rules",
+                    symbol: "Tag ↗ (Unsure)",
+                    title: { 
+                        es: "Tag Questions: Duda Genuina", 
+                        en: "Tag Questions: Genuine Doubt" 
+                    },
+                    theory: {
+                        es: "En las 'Tag Questions' (ej. isn't it?), si realmente no sabes la respuesta y estás preguntando de verdad, la entonación SUBE al final ↗.",
+                        en: "In Tag Questions (e.g. isn't it?), if you genuinely don't know the answer and are truly asking, the intonation RISES at the end ↗."
+                    },
+                    image: "images/sound126.jpg",
+                    examples: [
+                        { word: "You're coming, aren't you? ↗", phonetic: "/...ˈɑːrnt ju ↗/", trans: { es: "Vienes, ¿verdad? (No estoy seguro)", en: "You're coming, aren't you?" } }
+                    ]
+                },
+                {
+                    id: "rule-intonation-tags-confirm",
+                    categoryId: "advanced-rules",
+                    symbol: "Tag ↘ (Sure)",
+                    title: { 
+                        es: "Tag Questions: Buscando Confirmación", 
+                        en: "Tag Questions: Seeking Agreement" 
+                    },
+                    theory: {
+                        es: "Si ya sabes la respuesta y solo estás invitando a la otra persona a estar de acuerdo contigo, la entonación en el 'Tag' BAJA ↘.",
+                        en: "If you already know the answer and are just inviting the other person to agree with you, the intonation on the Tag FALLS ↘."
+                    },
+                    image: "images/sound127.jpg",
+                    examples: [
+                        { word: "It's beautiful, isn't it? ↘", phonetic: "/...ˈɪznt ɪt ↘/", trans: { es: "Es hermoso, ¿no crees? (Sé que lo es)", en: "It's beautiful, isn't it?" } }
+                    ]
+                },
+				
+				// --- SIGLAS Y ACRÓNIMOS ---
+                {
+                    id: "rule-initialisms",
+                    categoryId: "advanced-rules",
+                    symbol: "T-V / F-B-I",
+                    title: { 
+                        es: "Siglas Deletreadas (Initialisms)", 
+                        en: "Spelled Initialisms" 
+                    },
+                    theory: {
+                        es: "Cuando lees una sigla letra por letra (como FBI, TV o CEO), el acento fuerte (la mayor energía de tu voz) SIEMPRE debe ir en la ÚLTIMA letra.",
+                        en: "When reading an abbreviation letter by letter, the primary stress (the highest energy of your voice) MUST always fall on the LAST letter."
+                    },
+                    image: "images/sound127.jpg", // Televisión
+                    examples: [
+                        { word: "TV", phonetic: "/ˌtiːˈviː/", trans: { es: "Televisión", en: "TV" } },
+                        { word: "FBI", phonetic: "/ˌɛf biː ˈaɪ/", trans: { es: "FBI", en: "FBI" } },
+                        { word: "CEO", phonetic: "/ˌsiː iː ˈoʊ/", trans: { es: "Director Ejecutivo", en: "CEO" } }
+                    ]
+                },
+                {
+                    id: "rule-acronyms",
+                    categoryId: "advanced-rules",
+                    symbol: "NASA / ASAP",
+                    title: { 
+                        es: "Acrónimos (Palabras completas)", 
+                        en: "Word Acronyms" 
+                    },
+                    theory: {
+                        es: "Si la sigla se puede leer como una palabra normal (Acrónimo), sigue las reglas regulares de acentuación de sustantivos: el acento fuerte va en la PRIMERA sílaba.",
+                        en: "If the abbreviation can be read as a normal word (Acronym), it follows regular noun stress rules: the primary stress falls on the FIRST syllable."
+                    },
+                    image: "images/sound128.jpg", // Cohete (NASA)
+                    examples: [
+                        { word: "NASA", phonetic: "/ˈnæsə/", trans: { es: "NASA", en: "NASA" } },
+                        { word: "PIN", phonetic: "/pɪn/", trans: { es: "PIN (Contraseña)", en: "PIN" } },
+                        { word: "Laser", phonetic: "/ˈleɪzər/", trans: { es: "Láser (Originalmente un acrónimo)", en: "Laser" } }
+                    ]
+                },
+
+                // --- LOS TRES ROSTROS DE LA 'U' ---
+                {
+                    id: "rule-u-put",
+                    categoryId: "short-vowels",
+                    symbol: "U = /ʊ/",
+                    title: { 
+                        es: "La 'U' de Put (/ʊ/)", 
+                        en: "The 'U' in Put (/ʊ/)" 
+                    },
+                    theory: {
+                        es: "Aunque la U corta suele sonar como /ʌ/ (relajada en el centro, como en 'Cut'), después de letras como P, B o F, a menudo toma el sonido /ʊ/ (como la doble OO corta de 'Book').",
+                        en: "Though short U is usually /ʌ/ (like in 'Cut'), after letters like P, B, or F, it often takes the /ʊ/ sound (like the short double OO in 'Book')."
+                    },
+                    image: "images/sound61.png", 
+                    examples: [
+                        { word: "Put", phonetic: "/pʊt/", trans: { es: "Poner", en: "Put" } },
+                        { word: "Push", phonetic: "/pʊʃ/", trans: { es: "Empujar", en: "Push" } },
+                        { word: "Full", phonetic: "/fʊl/", trans: { es: "Lleno", en: "Full" } }
+                    ]
+                },
+                {
+                    id: "rule-u-music",
+                    categoryId: "long-vowels",
+                    symbol: "U = /juː/",
+                    title: { 
+                        es: "La 'U' larga con 'Y' (/juː/)", 
+                        en: "The Long 'U' with 'Y' (/juː/)" 
+                    },
+                    theory: {
+                        es: "En muchas palabras, especialmente cuando la U es larga debido a la 'E Mágica' o en sílabas abiertas, no solo suena a U, sino que se le añade el sonido de la 'Y' suave al inicio (suena a 'You').",
+                        en: "In many words, especially with the 'Magic E' or open syllables, the U doesn't just sound like U, it adds the soft 'Y' glide at the beginning (sounding like 'You')."
+                    },
+                    image: "images/sound74.png", // Auriculares
+                    examples: [
+                        { word: "Music", phonetic: "/ˈmjuːzɪk/", trans: { es: "Música", en: "Music" } },
+                        { word: "Use", phonetic: "/juːz/", trans: { es: "Usar", en: "Use" } },
+                        { word: "Huge", phonetic: "/hjuːdʒ/", trans: { es: "Enorme", en: "Huge" } }
+                    ]
+                },
+
+                // --- LETRAS MUDAS EXCEPCIONALES ---
+                {
+                    id: "rule-silent-th",
+                    categoryId: "silent-letters",
+                    symbol: "Ø-TH",
+                    title: { 
+                        es: "La 'TH' muda", 
+                        en: "Silent 'TH' Rule" 
+                    },
+                    theory: {
+                        es: "Aunque la TH es crucial, en un par de palabras comunes (por origen o por reducción en el habla rápida), la TH desaparece por completo.",
+                        en: "Although TH is crucial, in a few common words (due to origin or reduction in fast speech), the TH disappears entirely."
+                    },
+                    image: "images/sound89.jpg", // Ropa (Clothes)
+                    examples: [
+                        { word: "Clothes", phonetic: "/kloʊz/", trans: { es: "Ropa (Comúnmente suena igual que 'Close')", en: "Clothes" } },
+                        { word: "Asthma", phonetic: "/ˈæzmə/", trans: { es: "Asma (TH muda, S suena a Z)", en: "Asthma" } }
+                    ]
+                },
+                {
+                    id: "rule-french-t",
+                    categoryId: "silent-letters",
+                    symbol: "Ø-T (French)",
+                    title: { 
+                        es: "La 'T' muda francesa", 
+                        en: "The Silent French 'T'" 
+                    },
+                    theory: {
+                        es: "En palabras prestadas del idioma francés que terminan en '-et' o '-ot', la letra 'T' final NUNCA se pronuncia. La última vocal suele sonar como 'EI' o 'OU'.",
+                        en: "In French loanwords ending in '-et' or '-ot', the final 'T' is NEVER pronounced. The final vowel usually sounds like 'EI' or 'OU'."
+                    },
+                    image: "images/sound90.jpg", // Comida / Buffet
+                    examples: [
+                        { word: "Buffet", phonetic: "/bəˈfeɪ/", trans: { es: "Bufé", en: "Buffet" } },
+                        { word: "Ballet", phonetic: "/bæˈleɪ/", trans: { es: "Ballet", en: "Ballet" } },
+                        { word: "Depot", phonetic: "/ˈdiːpoʊ/", trans: { es: "Almacén / Estación", en: "Depot" } }
+                    ]
+                },
+
+                // --- REDUCCIÓN DE SUFIJOS ADJETIVALES ---
+                {
+                    id: "rule-suffix-able",
+                    categoryId: "advanced-rules",
+                    symbol: "-ABLE / -IBLE = /əbəl/",
+                    title: { 
+                        es: "El sufijo -ABLE / -IBLE", 
+                        en: "The -ABLE / -IBLE Suffix" 
+                    },
+                    theory: {
+                        es: "¡Un error clásico! Nunca pronuncies esto como 'ey-bol'. El acento recae en la raíz de la palabra, reduciendo el sufijo al sonido Schwa /əbəl/.",
+                        en: "A classic mistake! Never pronounce this as 'ey-bol'. The stress remains on the root word, reducing the suffix to a Schwa sound /əbəl/."
+                    },
+                    image: "images/sound129.jpg", // Sillón cómodo
+                    examples: [
+                        { word: "Comfortable", phonetic: "/ˈkʌmftərbəl/", trans: { es: "Cómodo", en: "Comfortable" } },
+                        { word: "Possible", phonetic: "/ˈpɒsəbəl/", trans: { es: "Posible", en: "Possible" } },
+                        { word: "Valuable", phonetic: "/ˈvæljuəbəl/", trans: { es: "Valioso", en: "Valuable" } }
+                    ]
+                },
+                {
+                    id: "rule-suffix-ful",
+                    categoryId: "advanced-rules",
+                    symbol: "-FUL = /fəl/",
+                    title: { 
+                        es: "El sufijo -FUL", 
+                        en: "The -FUL Suffix" 
+                    },
+                    theory: {
+                        es: "Cuando '-ful' se usa como sufijo, pierde la fuerza de la palabra original 'Full'. La 'U' desaparece y se convierte en un Schwa rápido: /fəl/.",
+                        en: "When '-ful' is used as a suffix, it loses the strength of the original word 'Full'. The 'U' disappears into a quick Schwa: /fəl/."
+                    },
+                    image: "images/sound130.jpg", // Paisaje hermoso
+                    examples: [
+                        { word: "Beautiful", phonetic: "/ˈbjuːtɪfəl/", trans: { es: "Hermoso", en: "Beautiful" } },
+                        { word: "Helpful", phonetic: "/ˈhɛlpfəl/", trans: { es: "Útil / Servicial", en: "Helpful" } },
+                        { word: "Careful", phonetic: "/ˈkeərfəl/", trans: { es: "Cuidadoso", en: "Careful" } }
+                    ]
+                },
+                {
+                    id: "rule-suffix-less",
+                    categoryId: "advanced-rules",
+                    symbol: "-LESS = /ləs/",
+                    title: { 
+                        es: "El sufijo -LESS", 
+                        en: "The -LESS Suffix" 
+                    },
+                    theory: {
+                        es: "Al igual que '-ful', el sufijo '-less' (que significa 'sin') nunca debe llevar el acento. La 'E' se debilita a Schwa o a una 'I' muy corta.",
+                        en: "Just like '-ful', the suffix '-less' (meaning 'without') should never be stressed. The 'E' weakens to a Schwa or short 'I'."
+                    },
+                    image: "images/sound131.jpg", // Tecnología Wireless
+                    examples: [
+                        { word: "Wireless", phonetic: "/ˈwaɪərləs/", trans: { es: "Inalámbrico", en: "Wireless" } },
+                        { word: "Useless", phonetic: "/ˈjuːsləs/", trans: { es: "Inútil", en: "Useless" } },
+                        { word: "Endless", phonetic: "/ˈɛndləs/", trans: { es: "Interminable", en: "Endless" } }
+                    ]
+                },
+
+                // --- LOS DOS SONIDOS DEL PREFIJO 'EX-' ---
+                {
+                    id: "rule-ex-unvoiced",
+                    categoryId: "advanced-rules",
+                    symbol: "EX- = /ɪks/",
+                    title: { 
+                        es: "El prefijo EX- Sordo (/ɪks/)", 
+                        en: "Unvoiced EX- Prefix (/ɪks/)" 
+                    },
+                    theory: {
+                        es: "Si la sílaba EX- no lleva el acento principal de la palabra Y va seguida de una consonante, suena seca y sorda, como una K y una S juntas (/ɪks/).",
+                        en: "If the EX- syllable is unstressed AND is followed by a consonant, it sounds sharp and voiceless, like a K and S together (/ɪks/)."
+                    },
+                    image: "images/sound132.jpg", // Esperando
+                    examples: [
+                        { word: "Expect", phonetic: "/ɪkˈspɛkt/", trans: { es: "Esperar", en: "Expect" } },
+                        { word: "Excuse", phonetic: "/ɪkˈskjuːz/", trans: { es: "Excusa / Disculpar", en: "Excuse" } },
+                        { word: "Explain", phonetic: "/ɪkˈspleɪn/", trans: { es: "Explicar", en: "Explain" } }
+                    ]
+                },
+                {
+                    id: "rule-ex-voiced",
+                    categoryId: "advanced-rules",
+                    symbol: "EX- = /ɪɡz/",
+                    title: { 
+                        es: "El prefijo EX- Sonoro (/ɪɡz/)", 
+                        en: "Voiced EX- Prefix (/ɪɡz/)" 
+                    },
+                    theory: {
+                        es: "Si la sílaba EX- va seguida de una vocal (o una H muda) y la sílaba siguiente ESTÁ acentuada, el sonido se vuelve sonoro, como una G y una Z vibrando juntas (/ɪɡz/).",
+                        en: "If the EX- syllable is followed by a vowel (or silent H) and the following syllable IS stressed, the sound becomes voiced, like a G and Z vibrating together (/ɪɡz/)."
+                    },
+                    image: "images/sound133.jpg", // Examen
+                    examples: [
+                        { word: "Exam", phonetic: "/ɪɡˈzæm/", trans: { es: "Examen", en: "Exam" } },
+                        { word: "Exist", phonetic: "/ɪɡˈzɪst/", trans: { es: "Existir", en: "Exist" } },
+                        { word: "Exhausted", phonetic: "/ɪɡˈzɔːstɪd/", trans: { es: "Agotado", en: "Exhausted" } }
+                    ]
+                },
+
+
+            ]
+        };
+
+        // 2. STATE MANAGEMENT
+        let currentLang = 'es';
+        let activeCategoryId = 'all';
+        let searchQuery = '';
+        let recognition = null;
+
+        // 3. DOM ELEMENTS RETRIEVAL
+        const langToggleBtn = document.getElementById('lang-toggle');
+        const langLabel = document.getElementById('lang-label');
+        const navTitle = document.getElementById('nav-title');
+        const navSubtitle = document.getElementById('nav-subtitle');
+        const heroTag = document.getElementById('hero-tag');
+        const heroTitle = document.getElementById('hero-title');
+        const heroDesc = document.getElementById('hero-desc');
+        const searchInput = document.getElementById('search-input');
+        const categoryHeader = document.getElementById('category-header');
+        const categoryList = document.getElementById('category-list');
+        const resultsCount = document.getElementById('results-count');
+        const rulesGrid = document.getElementById('rules-grid');
+        const emptyState = document.getElementById('empty-state');
+        const voiceModal = document.getElementById('voice-modal');
+        const voiceTargetWord = document.getElementById('voice-target-word');
+        const voiceHeardWord = document.getElementById('voice-heard-word');
+        const voiceResultBadge = document.getElementById('voice-result-badge');
+        const modalStatusTitle = document.getElementById('modal-status-title');
+        const modalStatusDesc = document.getElementById('modal-status-desc');
+
+        // 4. SPEECH SYNTHESIS CORE (TEXT-TO-SPEECH)
+        function playTargetAudio(text) {
+            if ('speechSynthesis' in window) {
+                // Cancel ongoing playback to prevent queuing overlaps
+                window.speechSynthesis.cancel();
+                
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'en-US'; // Strict native accent profile
+                utterance.rate = 0.82;   // Optimized pace for training/auditory distinction
+                utterance.pitch = 1.0;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert(currentLang === 'es' ? "Tu dispositivo no soporta la síntesis de voz." : "Your system does not support text-to-speech synthesis.");
+            }
+        }
+
+        // 5. SPEECH RECOGNITION CORE (INTERACTIVE AUDIO ASSESSMENT)
+        function initSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+
+                recognition.onstart = () => {
+                    updateModalState('listening');
+                };
+
+                oname = ""; // clear temporary text reference
+                recognition.onresult = (event) => {
+                    const resultText = event.results[0][0].transcript;
+                    const cleanHeard = resultText.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                    const cleanTarget = voiceTargetWord.textContent.trim().toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                    
+                    voiceHeardWord.textContent = `"${resultText}"`;
+                    
+                    if (cleanHeard === cleanTarget) {
+                        updateModalState('success');
+                    } else {
+                        updateModalState('mismatch');
+                    }
+                };
+
+                recognition.onerror = (err) => {
+                    console.error(err);
+                    updateModalState('error');
+                };
+
+                recognition.onend = () => {
+                    // Handled automatically or manually via close button
+                };
+            } else {
+                document.getElementById('status-speech').textContent = "Mic API Unsupported";
+                document.getElementById('status-speech').className = "flex items-center gap-2 text-xs bg-red-100 px-3 py-1.5 rounded-lg text-red-600 font-medium";
+            }
+        }
+
+        function launchVoicePractice(word) {
+            if (!recognition) {
+                alert(currentLang === 'es' ? "El reconocimiento de voz no está soportado en este navegador. Usa Chrome o Edge." : "Speech recognition is not fully supported on this web browser. Please try Chrome or Edge.");
+                return;
+            }
+            // Reset modal presentation layer
+            voiceTargetWord.textContent = word;
+            voiceHeardWord.textContent = "...";
+            voiceResultBadge.classList.add('hidden');
+            
+            // Slide modal into viewpoint bounds
+            voiceModal.classList.remove('translate-y-32', 'opacity-0', 'pointer-events-none');
+            
+            // Trigger browser microphone stream
+            try {
+                recognition.start();
+            } catch(e) {
+                // If already active, restart gracefully
+                recognition.stop();
+                setTimeout(() => recognition.start(), 200);
+            }
+        }
+
+        function updateModalState(state) {
+            const strings = appDatabase.ui[currentLang];
+            const badge = voiceResultBadge;
+            badge.classList.remove('hidden', 'bg-emerald-100', 'text-emerald-800', 'bg-rose-100', 'text-rose-800', 'bg-amber-100', 'text-amber-800');
+            
+            if (state === 'listening') {
+                modalStatusTitle.textContent = strings.statusListening;
+                modalStatusDesc.textContent = currentLang === 'es' ? "Habla ahora de forma clara frente a tu micrófono." : "Speak clearly into your device microphone now.";
+                badge.classList.add('hidden');
+            } else if (state === 'success') {
+                modalStatusTitle.textContent = "¡Perfecto!";
+                badge.textContent = strings.statusSuccess;
+                badge.classList.add('bg-emerald-100', 'text-emerald-800 block');
+            } else if (state === 'mismatch') {
+                modalStatusTitle.textContent = "Inténtalo de nuevo";
+                badge.textContent = strings.statusMismatch;
+                badge.classList.add('bg-amber-100', 'text-amber-800 block');
+            } else if (state === 'error') {
+                modalStatusTitle.textContent = "Error";
+                badge.textContent = strings.statusError;
+                badge.classList.add('bg-rose-100', 'text-rose-800 block');
+            }
+        }
+
+        function closeVoiceModal() {
+            if (recognition) recognition.stop();
+            voiceModal.classList.add('translate-y-32', 'opacity-0', 'pointer-events-none');
+        }
+		
+		function openImageLightbox(src, alt) {
+			const lightbox = document.getElementById('image-lightbox');
+			const img = document.getElementById('lightbox-img');
+			img.src = src;
+			img.alt = alt;
+			lightbox.classList.remove('opacity-0', 'pointer-events-none');
+		}
+
+		function closeImageLightbox() {
+			document.getElementById('image-lightbox').classList.add('opacity-0', 'pointer-events-none');
+		}
+
+
+        // 6. RENDER INTERFACE SYSTEM
+        function renderInterface() {
+            const strings = appDatabase.ui[currentLang];
+            
+            // Sync Static Global Text Elements
+            navTitle.textContent = strings.navTitle;
+            navSubtitle.textContent = strings.navSubtitle;
+            langLabel.textContent = strings.langLabel;
+            document.getElementById('lang-toggle').lastElementChild.textContent = strings.langEmoji;
+            heroTag.textContent = strings.heroTag;
+            heroTitle.textContent = strings.heroTitle;
+            heroDesc.textContent = strings.heroDesc;
+            searchInput.placeholder = strings.searchPlaceholder;
+            categoryHeader.textContent = strings.categoryHeader;
+            
+            document.getElementById('target-label').textContent = strings.targetLabel;
+            document.getElementById('heard-label').textContent = strings.heardLabel;
+
+            // Render Sidebar Categories dynamically
+            categoryList.innerHTML = '';
+            appDatabase.categories.forEach(cat => {
+                const button = document.createElement('button');
+                button.className = `w-full text-left px-3 py-2 rounded-xl text-sm font-semibold transition-all flex items-center justify-between ${activeCategoryId === cat.id ? 'bg-indigo-600 text-white shadow-md shadow-indigo-100' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-950'}`;
+                button.textContent = cat[currentLang];
+                button.onclick = () => {
+                    activeCategoryId = cat.id;
+                    renderInterface();
+                };
+                categoryList.appendChild(button);
+            });
+
+            // Process, Filter and Map the Rules Engine Data
+            const filteredRules = appDatabase.rules.filter(rule => {
+                const categoryMatch = (activeCategoryId === 'all' || rule.categoryId === activeCategoryId);
+                const query = searchQuery.toLowerCase().trim();
+                if (!query) return categoryMatch;
+
+                const textMatch = rule.title[currentLang].toLowerCase().includes(query) || 
+                                  rule.theory[currentLang].toLowerCase().includes(query) ||
+                                  rule.symbol.toLowerCase().includes(query) ||
+                                  rule.examples.some(ex => ex.word.toLowerCase().includes(query));
+                
+                return categoryMatch && textMatch;
+            });
+
+            // Update Counter Text
+            resultsCount.textContent = strings.resultsCount.replace('{count}', filteredRules.length);
+
+            // Inject Cards Grid Structure
+            rulesGrid.innerHTML = '';
+            if (filteredRules.length === 0) {
+                emptyState.classList.remove('hidden');
+                document.getElementById('empty-title').textContent = strings.emptyTitle;
+                document.getElementById('empty-desc').textContent = strings.emptyDesc;
+            } else {
+                emptyState.classList.add('hidden');
+                filteredRules.forEach(rule => {
+                    const card = document.createElement('article');
+                    card.className = "bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden flex flex-col justify-between hover:shadow-md transition-shadow duration-200";
+                    
+                    // Template structure
+                    card.innerHTML = `
+                        <div>
+                            <!-- Header Media Layer -->
+							<div class="w-full relative bg-slate-100 overflow-hidden p-2 rounded-2xl border border-slate-200/80">
+								<img src="${rule.image}" alt="${rule.title[currentLang]}" 
+								 class="w-full h-full object-cover transition-transform duration-500 hover:scale-105 cursor-pointer" 
+								 loading="lazy" 
+								 onclick="openImageLightbox('${rule.image.replace(/'/g, "\\'")}', '${rule.title[currentLang].replace(/'/g, "\\'")}')">
+                                <div class="absolute top-3 right-3 bg-slate-900/80 backdrop-blur-md text-white font-mono font-bold text-sm px-3 py-1 rounded-full border border-white/20 shadow-sm">
+                                    ${rule.symbol}
+                                </div>
+                            </div>
+                            
+                            <!-- Content Details Panel -->
+                            <div class="p-5">
+                                <h4 class="text-lg font-bold text-slate-900 tracking-tight">${rule.title[currentLang]}</h4>
+                                <p class="text-slate-600 text-xs md:text-sm mt-2 leading-relaxed font-normal">${rule.theory[currentLang]}</p>
+                            </div>
+                        </div>
+
+                        <!-- Examples Interactive List Container -->
+                        <div class="p-5 bg-slate-50/50 border-t border-slate-100 space-y-2">
+                            ${rule.examples.map(ex => `
+                                <div class="flex items-center justify-between bg-white px-3 py-2.5 rounded-xl border border-slate-200/60 shadow-xs">
+                                    <div>
+                                        <div class="flex items-baseline gap-2">
+                                            <span class="text-base font-bold text-slate-900">${ex.word}</span>
+                                            <span class="text-xs font-mono text-indigo-500 font-medium">${ex.phonetic}</span>
+                                        </div>
+                                        <div class="text-xs text-slate-400 font-medium mt-0.5">${ex.trans[currentLang]}</div>
+                                    </div>
+                                    
+                                    <!-- Action Action Controls -->
+                                    <div class="flex gap-1.5">
+                                        <button onclick="playTargetAudio('${ex.word.replace(/'/g, "\\'")}')" class="inline-flex items-center gap-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" title="${strings.btnListen}">
+                                            <!--<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-10.293-2.707a1 1 0 00-1.414 1.414L8.586 10l-2.293 2.293a1 1 0 001.414 1.414L10 11.414l2.293 2.293a1 1 0 001.414-1.414L11.414 10l2.293-2.293a1 1 0 00-1.414-1.414L10 8.586 7.707 7.293z"/></svg>-->
+											<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+												<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072M12 6.5l-4 4H5a1 1 0 00-1 1v2a1 1 0 001 1h3l4 4V6.5zM19.071 4.929a8 8 0 010 11.314"></path>
+											</svg>
+                                            <span>${strings.btnListen}</span>
+                                        </button>
+                                        <button onclick="launchVoicePractice('${ex.word.replace(/'/g, "\\'")}')" class="inline-flex items-center gap-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 px-3 py-1.5 rounded-lg text-xs font-bold transition-colors" title="${strings.btnPractice}">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                                            <span>${strings.btnPractice}</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    `;
+                    rulesGrid.appendChild(card);
+                });
+            }
+        }
+
+        // 7. EVENT LISTENERS SETUP
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'es' ? 'en' : 'es';
+            renderInterface();
+        });
+
+        searchInput.addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderInterface();
+        });
+
+        // Initialize App on Document Load
+        window.addEventListener('DOMContentLoaded', () => {
+            initSpeechRecognition();
+            renderInterface();
+        });
+		
+		
+    </script>
+</body>
+</html>
